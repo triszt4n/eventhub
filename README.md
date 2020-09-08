@@ -1,24 +1,27 @@
-# README
+# Event Hub
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Beginner Ruby on Rails home project.
 
-Things you may want to cover:
+# Details
 
-* Ruby version
+### Ruby version
 
-* System dependencies
+Versions used during development:
+ruby 2.7.1p83
+rails 6.0.3.2
 
-* Configuration
+### Set up
 
-* Database creation
+#### You'll need
 
-* Database initialization
+* Ruby
+* Rails
+* MySQL/MariaDB
 
-* How to run the test suite
+#### First steps
 
-* Services (job queues, cache servers, search engines, etc.)
+```bash
+bundle install
+```
 
-* Deployment instructions
-
-* ...
+...
