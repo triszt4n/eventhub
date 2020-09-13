@@ -1,39 +1,111 @@
-<p id="notice"><%= notice %></p>
+<div class="row mt-5">
+  <div class="col-12 col-lg-10">
+      <h2>
+        <%= @event.title %>
+      </h2>
+      <!-- <small class="text-success">
+        You've subscribed <i class="fas fa-check"></i>
+      </small> -->
+  </div>
+  <div class="col-12 col-lg-2 mt-3 mt-lg-0 text-right">
+    <form method="POST" action="/subscribe">
+      <!-- alternative: javascript file fetch function! -->
+      <% if false %>
+        <button type="submit" class="btn btn-block btn-outline-primary">
+          Subscribe event
+        </button>
+      <% else %>
+        <%= link_to 'Edit', edit_event_path(@event), class: 'btn btn-info' %>
+      <% end %>
+    </form>
+  </div>
+</div>
 
-<p>
-  <strong>Title:</strong>
-  <%= @event.title %>
-</p>
+<div class="mt-5">
+  <div class="row mb-5 lead">
+    <div class="col-12 col-lg-5">
+      <%= @event.place %>
+    </div>
+    <div class="col-12 col-lg-7 text-lg-right">
+      <strong>
+        <%= @event.start_date %> - <%= @event.end_date %>
+      </strong>
+    </div>
+  </div>
+  <div class="row mb-2">
+    <div class="font-weight-bold col-12 col-lg-auto">
+      Theme of event:
+    </div>
+    <div class="col-12 col-lg-9">
+      <%= @event.theme %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="font-weight-bold col-12 col-lg-auto">
+      Full description:
+    </div>
+    <div class="col-12 col-lg-9">
+      <%= @event.full_desc %>
+    </div>
+  </div>
+</div>
 
-<p>
-  <strong>Theme:</strong>
-  <%= @event.theme %>
-</p>
+<div class="row mt-5 justify-content-end">
+  <div class="col-auto">
+    <strong>Organized by:</strong>
+    <div class="media">
+      <%= image_tag("profile.png", class: "profile-pic-mini mr-3") %>
+      <div class="media-body">
+        <h5 onclick="window.location.href = '/users/ ??? ';" class="mb-0 mt-1 clickable">
+          Bob Geldof
+        </h5>
+        <strong>Subscribers:</strong> 101 988
+      </div>
+    </div>
+    <form method="POST" action="/subscribe">
+      <!-- alternative: javascript file fetch function! -->
+      <button type="submit" class="btn btn-sm btn-outline-primary float-right">
+        Subscribe
+      </button>
+    </form>
+  </div>
+</div>
 
-<p>
-  <strong>Short desc:</strong>
-  <%= @event.short_desc %>
-</p>
+<ul class="nav nav-tabs mt-5">
+  <li class="nav-item">
+    <a class="nav-link active" href="./event_posts.html">Posts (2)</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="./event_subscribers.html">Subscribers (3)</a>
+  </li>
+</ul>
 
-<p>
-  <strong>Full desc:</strong>
-  <%= @event.full_desc %>
-</p>
+<div class="row mt-4">
+  <div class="col-12 text-right">
+    <a href="events/<%= @event.id %>/posts/new" class="btn btn-primary">
+      <i class="fas fa-plus"></i>&nbsp;New
+    </a>
+  </div>
+</div>
 
-<p>
-  <strong>Published:</strong>
-  <%= @event.published %>
-</p>
-
-<p>
-  <strong>Start date:</strong>
-  <%= @event.start_date %>
-</p>
-
-<p>
-  <strong>End date:</strong>
-  <%= @event.end_date %>
-</p>
-
-<%= link_to 'Edit', edit_event_path(@event) %> |
-<%= link_to 'Back', events_path %>
+<div class="mt-4">
+  <!-- Pelda card egy eventre -->
+  <div class="card bg-light mb-3">
+      <div class="card-body">
+          <h5 class="card-title">
+              <button href="#" class="btn btn-danger float-right">
+                  <i class="fas fa-trash"></i>
+              </button>
+              Lorem ipsum - the beginning
+          </h5>
+          <h6 class="card-subtitle mb-2 text-muted">
+              <i class="fas fa-paper-plane"></i>&nbsp;2020. 09. 07. 23:32
+          </h6>
+          <p class="card-text">
+              Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,
+              totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+          </p>
+      </div>
+  </div>
+  <!-- Pelda card vege -->
+</div>

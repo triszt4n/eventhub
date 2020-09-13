@@ -1,9 +1,8 @@
 <%= form_with(model: event, local: true) do |form| %>
   <% if event.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(event.errors.count, "error") %> prohibited this event from being saved:</h2>
-
-      <ul>
+    <div class="alert alert-danger my-4" role="alert">
+      Error (<%= event.errors.count %>):
+      <ul class="mb-0">
         <% event.errors.full_messages.each do |message| %>
           <li><%= message %></li>
         <% end %>
@@ -11,42 +10,65 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :title %>
-    <%= form.text_field :title %>
+  <div class="form-group">
+    <label for="event_title">
+      Title
+    </label>
+    <%= form.text_field :title, class: 'form-control' %>
   </div>
-
-  <div class="field">
-    <%= form.label :theme %>
-    <%= form.text_field :theme %>
+  <div class="form-group">
+    <label for="event_theme">
+        <p class="m-0">
+          Theme(s)
+        </p>
+        <small>e.g.: Talking night, TEDx talk, Modern vehicles, Pop concert</small>
+    </label>
+    <%= form.text_field :theme, class: 'form-control' %>
   </div>
-
-  <div class="field">
-    <%= form.label :short_desc %>
-    <%= form.text_field :short_desc %>
+  <div class="form-group">
+    <label for="event_start_date">
+      Starting date and time
+    </label>
+    <%= form.datetime_field :start_date, class: 'form-control' %>
   </div>
-
-  <div class="field">
-    <%= form.label :full_desc %>
-    <%= form.text_area :full_desc %>
+  <div class="form-group">
+    <label for="event_end_date">
+        <p class="m-0">
+          Ending date and time
+        </p>
+        <small>Leaving it blank will define no ending for the event.</small>
+    </label>
+    <%= form.datetime_field :end_date, class: 'form-control' %>
   </div>
-
-  <div class="field">
-    <%= form.label :published %>
+  <div class="form-group">
+    <label for="event_place">Place of event</label>
+    <%= form.text_field :place, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <label for="event_short_desc">
+        <p class="m-0">
+          Short description
+        </p>
+        <small>Summary of the event that will show up on the events page.</small>
+    </label>
+    <%= form.text_area :short_desc, rows: 2, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <label for="event_full_desc">
+        <p class="m-0">
+          Description
+        </p>
+        <small>Mention every detail of your event in this field.</small>
+    </label>
+    <%= form.text_area :full_desc, rows: 4, class: 'form-control' %>
+  </div>
+  <div class="form-group">
     <%= form.check_box :published %>
+    <label class="form-check-label" for="event_published">Publish this event to the events page!</label>
   </div>
 
-  <div class="field">
-    <%= form.label :start_date %>
-    <%= form.datetime_select :start_date %>
-  </div>
-
-  <div class="field">
-    <%= form.label :end_date %>
-    <%= form.datetime_select :end_date %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
+  <div class="mt-4">
+    <%= link_to 'Back', events_path, class: 'btn btn-danger' %>
+    <%= form.submit 'Save', class: 'btn btn-success float-right' %>
   </div>
 <% end %>
