@@ -1,14 +1,14 @@
 # Event Hub
 
-Beginner Ruby on Rails home project.
+My first homework project learning Ruby on Rails. Event Hub is a beginner social media app for sharing events with your future and present fans. Events --- like rock band gigs, theatrical performances, TED talks, tech shows etc. --- can be organized freely, they can be published, so that users could find them and subscribe to the posts on them.
 
 # Details
 
 ### Ruby version
 
 Versions used during development:
-ruby 2.7.1p83
-rails 6.0.3.2
+* ruby 2.7.1p83
+* rails 6.0.3.2
 
 ### Set up
 
@@ -16,7 +16,7 @@ rails 6.0.3.2
 
 * Ruby
 * Rails
-* MySQL/MariaDB
+* MySQL/MariaDB (mariadb >=10.3.22)
 
 #### First steps
 
@@ -24,4 +24,8 @@ rails 6.0.3.2
 bundle install
 ```
 
-...
+#### Run
+
+```bash
+rails s
+```

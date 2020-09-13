@@ -1,15 +1,94 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Eventhub</title>
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Event Hub</title>
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= favicon_link_tag asset_path('favicon.ico') %>
+
+    <%= stylesheet_link_tag 'application', media: "all" %>
+
+    <%= javascript_include_tag 'https://kit.fontawesome.com/735dba9ed7.js' %>
+    <%= javascript_pack_tag 'application' %>
   </head>
 
   <body>
-    <%= yield %>
+    <nav class="navbar navbar-expand-md navbar-dark bg-primary">
+      <div class="container">
+        <a class="navbar-brand" href="/">
+          <% image_tag("eventhub-icon.svg", size: "22", class: "d-inline-block mr-2") %> &nbsp;Event Hub
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02"
+            aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarColor02">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="./index.html">Events</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/public">Public profiles</a>
+            </li>
+          </ul>
+          <ul class="navbar-nav mr-right">
+            <% if true %>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Trisztán Piller
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                  <a href="/user" class="dropdown-item">
+                    My Profile
+                  </a>
+                  <a href="/user_edit" class="dropdown-item">
+                    Edit Profile
+                  </a>
+                  <a href="/my_subscriptions" class="dropdown-item">
+                    My Subscriptions
+                  </a>
+                  <div class="dropdown-divider"></div>
+                  <a href="#" class="dropdown-item">
+                    Delete account
+                  </a>
+                  <div class="dropdown-divider"></div>
+                  <a href="/" class="dropdown-item">
+                    Log out
+                  </a>
+                </div>
+              </li>
+            <% else %>
+              <li class="nav-item">
+                <a class="nav-link" href="/login">Log in</a>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div class="toast custom-toast" id="error-toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+          <strong class="mr-auto">Notification</strong>
+          <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+            <span class="h3" aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="toast-body" id="error-toast-body">
+          Hello, world! This is a toast message.
+        </div>
+      </div>
+
+      <%= yield %>
+    </div>
+
+    <% if notice %>
+      <%= javascript_tag do %>
+        showToast("<%= notice %>")
+      <% end %>
+    <% end %>
+
   </body>
 </html>

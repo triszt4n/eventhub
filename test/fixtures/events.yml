@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  theme: MyString
+  short_desc: MyString
+  full_desc: MyText
+  published: false
+  start_date: 2020-09-13 00:06:43
+  end_date: 2020-09-13 00:06:43
+
+two:
+  title: MyString
+  theme: MyString
+  short_desc: MyString
+  full_desc: MyText
+  published: false
+  start_date: 2020-09-13 00:06:43
+  end_date: 2020-09-13 00:06:43
