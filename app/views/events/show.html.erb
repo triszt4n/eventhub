@@ -1,3 +1,7 @@
+<% content_for :javascripts do %>
+  <%= javascript_pack_tag 'events' %>
+<% end %>
+
 <div class="row mt-5">
   <div class="col-12 col-lg-10">
       <h2>
@@ -28,7 +32,12 @@
     </div>
     <div class="col-12 col-lg-7 text-lg-right">
       <strong>
-        <%= @event.start_date %> - <%= @event.end_date %>
+        <%= l @event.start_date, format: :datetime %> - 
+        <% if @event.start_date.to_date == @event.end_date.to_date %>
+          <%= l @event.end_date, format: :time %>
+        <% else %>
+          <%= l @event.end_date, format: :datetime %>
+        <% end %>
       </strong>
     </div>
   </div>
@@ -73,39 +82,47 @@
 
 <ul class="nav nav-tabs mt-5">
   <li class="nav-item">
-    <a class="nav-link active" href="./event_posts.html">Posts (2)</a>
+    <div class="nav-link clickable active" id="posts-btn">Posts (2)</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="./event_subscribers.html">Subscribers (3)</a>
+    <div class="nav-link clickable" id="subs-btn">Subscribers (3)</a>
   </li>
 </ul>
 
-<div class="row mt-4">
-  <div class="col-12 text-right">
-    <a href="events/<%= @event.id %>/posts/new" class="btn btn-primary">
-      <i class="fas fa-plus"></i>&nbsp;New
-    </a>
+<div class="mt-4" id="posts">
+  <div class="row my-4">
+      <div class="col-12 text-right">
+        <%= link_to 'New', new_post_path(@event), class: 'btn btn-primary' %>
+      </div>
+  </div>
+
+  <div class="card bg-light mb-3">
+    <div class="card-body">
+      <h5 class="card-title">
+        <button href="#" class="btn btn-danger float-right">
+          <i class="fas fa-trash"></i>
+        </button>
+        Lorem ipsum - the beginning
+      </h5>
+      <h6 class="card-subtitle mb-2 text-muted">
+        <i class="fas fa-paper-plane"></i>&nbsp;2020. 09. 07. 23:32
+      </h6>
+      <p class="card-text">
+        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,
+        totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+      </p>
+    </div>
   </div>
 </div>
 
-<div class="mt-4">
-  <!-- Pelda card egy eventre -->
-  <div class="card bg-light mb-3">
-      <div class="card-body">
-          <h5 class="card-title">
-              <button href="#" class="btn btn-danger float-right">
-                  <i class="fas fa-trash"></i>
-              </button>
-              Lorem ipsum - the beginning
-          </h5>
-          <h6 class="card-subtitle mb-2 text-muted">
-              <i class="fas fa-paper-plane"></i>&nbsp;2020. 09. 07. 23:32
-          </h6>
-          <p class="card-text">
-              Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,
-              totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
-          </p>
-      </div>
+<div class="mt-4 d-none" id="subs">
+  <div class="media">
+    <%= image_tag("profile.png", class: "profile-pic-mini mr-3") %>
+    <div class="media-body">
+      <h5 onclick="window.location.href = './user_events.html';" class="mb-0 mt-1 clickable">
+        Ludwig van Beethoven
+      </h5>
+      <strong>Subscribers:</strong> 143
+    </div>
   </div>
-  <!-- Pelda card vege -->
 </div>

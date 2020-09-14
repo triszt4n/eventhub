@@ -22,6 +22,9 @@ Versions used during development:
 
 ```bash
 bundle install
+yarn install
+rails db:create
+rails db:migrate
 ```
 
 #### Run
@@ -29,3 +32,6 @@ bundle install
 ```bash
 rails s
 ```
+
+#### Testing
+...

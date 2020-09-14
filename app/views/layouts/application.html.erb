@@ -11,6 +11,7 @@
 
     <%= javascript_include_tag 'https://kit.fontawesome.com/735dba9ed7.js' %>
     <%= javascript_pack_tag 'application' %>
+    <%= yield :javascripts %>
   </head>
 
   <body>
@@ -68,7 +69,7 @@
       </div>
     </nav>
 
-    <div class="container mb-5">
+    <div class="container wrapper">
       <% if notice %>
         <div class="alert alert-warning alert-dismissible fade show" role="alert">
           <%= notice %>
@@ -79,6 +80,13 @@
       <% end %>
 
       <%= yield %>
+      <div class="placeholder"></div>
     </div>
+
+    <footer class="page-footer mt-5 text-dark bg-light">
+      <div class="text-center py-3">© 2020 Copyright:
+        <a href="#"> Trisztán Piller</a>
+      </div>
+    </footer>
   </body>
 </html>

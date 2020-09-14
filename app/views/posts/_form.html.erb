@@ -1,0 +1,35 @@
+<%= form_with(model: post, local: true) do |form| %>
+  <% if post.errors.any? %>
+    <div class="alert alert-danger my-4" role="alert">
+      Error (<%= post.errors.count %>):
+      <ul class="mb-0">
+        <% post.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="form-group">
+    <%= form.label :title %>
+    <%= form.text_field :title, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <label for="post_body">
+      <p class="m-0">
+        Message body
+      </p>
+      <small>
+        Keep your subscribers updated.
+      </small>
+    </label>
+    <%= form.text_area :body, class: 'form-control', rows: 4 %>
+  </div>
+
+  <div class="mt-4">
+    <%= link_to 'Back', events_path, class: 'btn btn-danger' %>
+    <%= form.submit 'Save', class: 'btn btn-success float-right' %>
+  </div>
+
+<% end %>

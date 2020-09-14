@@ -3,6 +3,25 @@
  * Additional classes for the project
  */
 
+.placeholder {
+  height: 3rem;
+}
+
+body {
+  position: relative;
+  min-height: 100vh;
+}
+
+.wrapper {
+  padding-bottom: 3rem;
+}
+
+.page-footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
 .clickable {
   cursor: pointer;
 }
