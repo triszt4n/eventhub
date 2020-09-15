@@ -5,7 +5,7 @@ class CreateEvents < ActiveRecord::Migration[6.0]
       t.string :theme
       t.string :short_desc
       t.text :full_desc
-      t.boolean :published, :default => 1
+      t.boolean :published
       t.datetime :start_date
       t.datetime :end_date
 

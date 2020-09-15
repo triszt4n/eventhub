@@ -1,5 +1,5 @@
 module ApplicationHelper
-    def logged_in?
-        false
-    end
+  def logged_in?
+    false
+  end
 end

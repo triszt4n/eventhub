@@ -10,14 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_14_220159) do
+ActiveRecord::Schema.define(version: 2020_09_15_084656) do
 
   create_table "events", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "title"
     t.string "theme"
     t.string "short_desc"
     t.text "full_desc"
-    t.boolean "published", default: true
+    t.boolean "published", default: false
     t.datetime "start_date"
     t.datetime "end_date"
     t.datetime "created_at", precision: 6, null: false
@@ -38,14 +38,15 @@ ActiveRecord::Schema.define(version: 2020_09_14_220159) do
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "email"
-    t.string "password"
+    t.string "encrypted_password"
     t.string "name"
     t.string "city"
     t.string "profile"
     t.text "about"
-    t.boolean "public"
+    t.boolean "public", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "salt"
   end
 
   add_foreign_key "events", "users"

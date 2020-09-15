@@ -27,41 +27,31 @@
         <div class="collapse navbar-collapse" id="navbarColor02">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-              <a class="nav-link" href="/">Events</a>
+              <%= link_to 'Events', events_path, class: 'nav-link' %>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/users">Public profiles</a>
+              <%= link_to 'Profiles', users_path, class: 'nav-link' %>
             </li>
           </ul>
           <ul class="navbar-nav mr-right">
             <% if logged_in? %>
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Trisztán Piller
+                  <%= session[:user].name %>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                  <a href="/users/me" class="dropdown-item">
-                    My Profile
-                  </a>
-                  <a href="/users/me/edit" class="dropdown-item">
-                    Edit Profile
-                  </a>
+                  <%= link_to 'My profile', profile_path, class: 'dropdown-item' %>
+                  <%= link_to 'Edit profile', profile_edit_path, class: 'dropdown-item' %>
                   <a href="/users/me/subs" class="dropdown-item">
                     My Subscriptions
                   </a>
                   <div class="dropdown-divider"></div>
-                  <a href="/users/me/delete" class="dropdown-item">
-                    Delete account
-                  </a>
-                  <div class="dropdown-divider"></div>
-                  <a href="/logout" class="dropdown-item">
-                    Log out
-                  </a>
+                  <%= link_to 'Log out', logout_path, class: 'dropdown-item' %>
                 </div>
               </li>
             <% else %>
               <li class="nav-item">
-                <a class="nav-link" href="/login">Log in</a>
+                <%= link_to 'Log in', auth_path, class: 'nav-link' %>
               </li>
             <% end %>
           </ul>
@@ -70,9 +60,9 @@
     </nav>
 
     <div class="container wrapper">
-      <% if notice %>
+      <% if flash[:notice] %>
         <div class="alert alert-warning alert-dismissible fade show" role="alert">
-          <%= notice %>
+          <%= flash[:notice] %>
           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>

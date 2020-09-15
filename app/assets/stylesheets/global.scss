@@ -7,6 +7,10 @@
   height: 3rem;
 }
 
+.invert-pic {
+  filter: invert(1);
+}
+
 body {
   position: relative;
   min-height: 100vh;
@@ -72,7 +76,6 @@ body {
   display: block;
   padding-left: 30px;
   cursor: pointer;
-  vertical-align: middle;
 }
 
 .magic-checkbox+label:hover:before,

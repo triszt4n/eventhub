@@ -1,0 +1,114 @@
+<div class="row mt-5">
+  <div class="col-auto">
+    <%= image_tag("profile.png", class: "profile-pic") %>
+  </div>
+  <div class="col">
+    <h2>
+      Wolfgang Amadeus Mozart
+    </h2>
+    <small class="text-success">
+      You've subscribed <i class="fas fa-check"></i>
+    </small>
+  </div>
+</div>
+
+<div class="row mt-4">
+  <div class="col-4 col-lg-2 pr-0 text-right">
+    <strong>City:</strong>
+  </div>
+  <div class="col-8 col-lg-10">
+    Salzburg, Austria
+  </div>
+  <div class="col-4 col-lg-2 pr-0 text-right">
+    <strong>Main profile:</strong>
+  </div>
+  <div class="col-8 col-lg-10">
+    Viennese classical composer
+  </div>
+  <div class="col-4 col-lg-2 pr-0 text-right">
+    <strong>About:</strong>
+  </div>
+  <div class="col-8 col-lg-10">
+    Wolfgang specializes in composing for the noble and royal, also he's an advocate for the plebs' cultural flourishing.
+    Famous for his operas - Magic flute and Don Giovanni -, and for his piano concertos.
+  </div>            
+</div>
+
+<div class="row mt-3 justify-content-md-end">
+  <div class="col-12 col-md-2">
+    <form method="POST" action="/subscribe">
+      <!-- alternative: javascript file fetch function! -->
+      <button type="submit" class="btn btn-block btn-outline-danger">
+        Unsubscribe
+      </button>
+    </form>
+  </div>
+</div>
+
+<ul class="nav nav-tabs mt-3">
+    <li class="nav-item">
+      <a class="nav-link active" href="#">Events (1)</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Subscribers (3)</a>
+    </li>
+</ul>
+
+<div class="mt-4" id="events">
+  <div class="row my-4">
+    <div class="col-12 text-right">
+      <a href="./event_new.html" class="btn btn-primary">
+        <i class="fas fa-plus"></i>&nbsp;New
+      </a>
+    </div>
+  </div>
+
+  <div class="card text-white bg-secondary mb-3">
+    <h4 onclick="window.location.href = './event_posts.html';" class="card-header clickable">
+      Debut of Piano concerto no. 20 in d minor
+    </h4>
+    <div class="card-body">
+      <div class="row mb-3">
+        <div class="lead col-12 col-lg-3 text-lg-right">
+          Short description:
+        </div>
+        <div class="col-12 col-lg-9 pt-1">
+          Highly acclaimed by his father, this concerto will be a monumental one for the new classical period of music.
+        </div>
+      </div>
+      <div class="row mb-2">
+        <div class="lead col-12 col-lg-3 text-lg-right">
+          Coordinates:
+        </div>
+        <div class="col-12 col-lg-9 pt-1">
+          <p class="mb-1">
+            Schönbrunn Castle, Austria
+          </p>
+          <p class="m-0"><strong>
+            2020. 10. 10. 10:00 - 13:30
+          </strong></p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="lead col-12 col-lg-3 text-lg-right">
+          Theme of event:
+        </div>
+        <div class="col-12 col-lg-9 pt-1">
+          Classical music
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="mt-4 d-none" id="subs">
+  <div class="media">
+    <img class="profile-pic-mini mr-3" src="/img/profile.png" alt="Generic placeholder image">
+    <div class="media-body">
+      <h5 onclick="window.location.href = './user_events.html';" class="mb-0 mt-1 clickable">
+        Ludwig van Beethoven
+      </h5>
+      <strong>Subscribers:</strong> 143
+    </div>
+  </div>
+</div>

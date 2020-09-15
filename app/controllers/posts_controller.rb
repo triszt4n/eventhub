@@ -1,11 +1,6 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
 
-  # GET /posts
-  def index
-    @posts = Post.all
-  end
-
   # GET /posts/1
   def show
   end
@@ -39,7 +34,6 @@ class PostsController < ApplicationController
         format.html { redirect_to @post }
       else
         format.html { render :edit }
-        format.json { render json: @post.errors, status: :unprocessable_entity }
       end
     end
   end
