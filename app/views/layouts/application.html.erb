@@ -27,10 +27,10 @@
         <div class="collapse navbar-collapse" id="navbarColor02">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-              <%= link_to 'Events', events_path, class: 'nav-link' %>
+              <%= link_to 'Events', events_path, class: current_controller?('events')? 'nav-link active' : 'nav-link' %>
             </li>
             <li class="nav-item">
-              <%= link_to 'Profiles', users_path, class: 'nav-link' %>
+              <%= link_to 'Profiles', users_path, class: current_controller?('users')? 'nav-link active' : 'nav-link' %>
             </li>
           </ul>
           <ul class="navbar-nav mr-right">
@@ -51,7 +51,7 @@
               </li>
             <% else %>
               <li class="nav-item">
-                <%= link_to 'Log in', auth_path, class: 'nav-link' %>
+                <%= link_to 'Log in', auth_path, class: current_controller?('sessions')? 'nav-link active' : 'nav-link' %>
               </li>
             <% end %>
           </ul>
@@ -73,7 +73,7 @@
       <div class="placeholder"></div>
     </div>
 
-    <footer class="page-footer mt-5 text-dark bg-light">
+    <footer class="page-footer mt-5">
       <div class="text-center py-3">© 2020 Copyright:
         <a href="#"> Trisztán Piller</a>
       </div>

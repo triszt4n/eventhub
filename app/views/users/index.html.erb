@@ -7,11 +7,11 @@
 <div class="row row-cols-1 row-cols-lg-2">
   <% @users.each do |user| if user.public then %>
     <div class="col mb-4">
-      <div onclick="window.location.href = '/users/<%= user.id %>%';" class="card clickable">
+      <div onclick="window.location.href = '/users/<%= user.id %>';" class="card clickable">
         <div class="card-body">
           <div class="row">
-            <div class="col-auto">
-              <%= image_tag("profile.png", heigth: 120) %>
+            <div class="col-auto pr-0">
+              <%= image_tag("profile.png", class: "profile-pic-mid") %>
             </div>
             <div class="col">
               <h4 class="card-title">
@@ -28,7 +28,7 @@
                   <strong>Main profile:</strong> <%= user.profile %>
                 </p>
                 <p class="m-0">
-                  <strong>Subscribers:</strong> 25 671
+                  <strong>Followers:</strong> 25 671
                 </p>
               </div>
             </div>

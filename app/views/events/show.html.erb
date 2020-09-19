@@ -8,18 +8,23 @@
         <%= @event.title %>
       </h2>
       <!-- <small class="text-success">
-        You've subscribed <i class="fas fa-check"></i>
+        You're following <i class="fas fa-check"></i>
       </small> -->
   </div>
   <div class="col-12 col-lg-2 mt-3 mt-lg-0 text-right">
-    <form method="POST" action="/subscribe">
+    <form method="POST" action="/follow">
       <!-- alternative: javascript file fetch function! -->
       <% if false %>
         <button type="submit" class="btn btn-block btn-outline-primary">
-          Subscribe event
+          Follow event
+        </button>
+      <% elsif false %>
+        <button type="submit" class="btn btn-block btn-outline-danger">
+          Unfollow event
         </button>
       <% else %>
         <%= link_to 'Edit', edit_event_path(@event), class: 'btn btn-info' %>
+        <%= link_to 'Delete', '#', class: 'btn btn-danger' %>
       <% end %>
     </form>
   </div>
@@ -68,13 +73,13 @@
         <h5 onclick="window.location.href = '/users/ ??? ';" class="mb-0 mt-1 clickable">
           Bob Geldof
         </h5>
-        <strong>Subscribers:</strong> 101 988
+        <strong>Followers:</strong> 101 988
       </div>
     </div>
-    <form method="POST" action="/subscribe">
+    <form method="POST" action="/follow">
       <!-- alternative: javascript file fetch function! -->
       <button type="submit" class="btn btn-sm btn-outline-primary float-right">
-        Subscribe
+        Follow
       </button>
     </form>
   </div>
@@ -82,10 +87,10 @@
 
 <ul class="nav nav-tabs mt-5">
   <li class="nav-item">
-    <div class="nav-link clickable active" id="posts-btn">Posts (2)</a>
+    <div class="nav-link clickable active" id="posts-btn">Posts (<%= 2 %>)</a>
   </li>
   <li class="nav-item">
-    <div class="nav-link clickable" id="subs-btn">Subscribers (3)</a>
+    <div class="nav-link clickable" id="followers-btn">Followers (<%= 3 %>)</a>
   </li>
 </ul>
 
@@ -115,14 +120,14 @@
   </div>
 </div>
 
-<div class="mt-4 d-none" id="subs">
+<div class="mt-4 d-none" id="followers">
   <div class="media">
     <%= image_tag("profile.png", class: "profile-pic-mini mr-3") %>
     <div class="media-body">
       <h5 onclick="window.location.href = './user_events.html';" class="mb-0 mt-1 clickable">
         Ludwig van Beethoven
       </h5>
-      <strong>Subscribers:</strong> 143
+      <strong>Followers:</strong> 143
     </div>
   </div>
 </div>

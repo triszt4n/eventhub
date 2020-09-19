@@ -34,6 +34,10 @@ body {
   height: 11rem;
 }
 
+.profile-pic-mid {
+  height: 7rem;
+}
+
 .profile-pic-mini {
   height: 3rem;
 }
@@ -41,6 +45,10 @@ body {
 @media (max-width: 768px) {
   .profile-pic {
     height: 4rem;
+  }
+
+  .profile-pic-mid {
+    height: 3rem;
   }
 }
 
