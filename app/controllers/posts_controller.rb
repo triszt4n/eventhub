@@ -3,7 +3,6 @@ class PostsController < ApplicationController
 
   # GET /posts/1
   def show
-    @post = Post.new id: 1, title: "Hello everybody", body: "Welcome here, we'll stay in touch via these post under the event. Thanks!", event_id: 1, created_at: DateTime.new(2020,1,10,10,30,0)
   end
 
   # GET /posts/new
@@ -13,7 +12,6 @@ class PostsController < ApplicationController
 
   # GET /posts/1/edit
   def edit
-    @post = Post.new id: 1, title: "Hello everybody", body: "Welcome here, we'll stay in touch via these post under the event. Thanks!", event_id: 1
   end
 
   # POST /posts
@@ -44,9 +42,9 @@ class PostsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    # def set_post
-    #   @post = Post.find(params[:id])
-    # end
+    def set_post
+      @post = Post.find(params[:id])
+    end
 
     # Only allow a list of trusted parameters through.
     def post_params

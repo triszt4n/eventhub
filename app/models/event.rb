@@ -1,6 +1,9 @@
 class Event < ApplicationRecord
   has_many :posts
   belongs_to :user
+  
+  has_many :event_follows
+  has_many :users, :through => :event_follows
 
   validates :title, length: { in: 3..255 }
   validates :theme, length: { maximum: 255 }

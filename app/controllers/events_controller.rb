@@ -1,23 +1,13 @@
 class EventsController < ApplicationController
-  # before_action :set_event, only: [:show, :edit, :update, :destroy]
+  before_action :set_event, only: [:show, :edit, :update, :destroy]
 
   # GET /events
   def index
-    # @events = Event.all
-    @events = []
-    @events << Event.new(id: 1, title: "Mozart Enthusiasts' Night", theme: "Talking night, Classical music", 
-      short_desc: "Welcome, dear Sir! We invite you to a wonderous night at the Cafe Mozarteum to have a pleasant discussion about our lord and saviour Wolfgang Theophilius Amadeus Mozart.",
-      published: true, start_date: DateTime.new(2020,1,1,10,30,0), end_date: DateTime.new(2020,1,1,11,30,0), place: "Cafe Mozarteum, Salzburg", user_id: 1)
-    @events << Event.new(id: 2, title: "Live Aid 1985", theme: "Charity concert, Good cause",
-      short_desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      published: true, start_date: DateTime.new(1985,7,13,9,0,0), end_date: DateTime.new(1985,7,13,22,0,0), place: "Wembley Stadium, London, UK", user_id: 1) 
+    @events = Event.all
   end
 
   # GET /events/1
   def show
-    @event = Event.new(id: 1, title: "Live Aid 1985", theme: "Charity concert, Good cause",
-      full_desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      published: true, start_date: DateTime.new(1985,7,13,9,0,0), end_date: DateTime.new(1985,7,13,22,0,0), place: "Wembley Stadium, London, UK", user_id: 1) 
   end
 
   # GET /events/new
@@ -27,9 +17,6 @@ class EventsController < ApplicationController
 
   # GET /events/1/edit
   def edit
-    @event = Event.new(id: 1, title: "Live Aid 1985", theme: "Charity concert, Good cause",
-      full_desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      published: true, start_date: DateTime.new(1985,7,13,9,0,0), end_date: DateTime.new(1985,7,13,22,0,0), place: "Wembley Stadium, London, UK", user_id: 1) 
   end
 
   # POST /events
@@ -60,9 +47,9 @@ class EventsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    # def set_event
-    #   @event = Event.find(params[:id])
-    # end
+    def set_event
+      @event = Event.find(params[:id])
+    end
 
     # Only allow a list of trusted parameters through.
     def event_params
