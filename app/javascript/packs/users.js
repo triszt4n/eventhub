@@ -1,4 +1,4 @@
-function showPosts() {
+function showEvents() {
   $('#events').removeClass('d-none')
   $('#followers').removeClass('d-none').addClass('d-none')
   $('#followers-btn').removeClass('active')
@@ -12,5 +12,5 @@ function showFollowers() {
   $('#followers-btn').removeClass('active').addClass('active')
 }
 
-$(() => $('#events-btn').on('click', () => showPosts()))
+$(() => $('#events-btn').on('click', () => showEvents()))
 $(() => $('#followers-btn').on('click', () => showFollowers()))

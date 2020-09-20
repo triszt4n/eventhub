@@ -70,10 +70,10 @@
     <div class="media">
       <%= image_tag("profile.png", class: "profile-pic-mini mr-3") %>
       <div class="media-body">
-        <h5 onclick="window.location.href = '/users/ ??? ';" class="mb-0 mt-1 clickable">
-          Bob Geldof
+        <h5 onclick="window.location.href = '/users/<%= @event.user.id %> ';" class="mb-0 mt-1 clickable">
+          <%= @event.user.name %>
         </h5>
-        <strong>Followers:</strong> 101 988
+        <strong>Followers:</strong> <%= @event.user.followers.length %>
       </div>
     </div>
     <form method="POST" action="/follow">
@@ -87,47 +87,50 @@
 
 <ul class="nav nav-tabs mt-5">
   <li class="nav-item">
-    <div class="nav-link clickable active" id="posts-btn">Posts (<%= 2 %>)</a>
+    <div class="nav-link clickable active" id="posts-btn">Posts (<%= @event.posts.length %>)</a>
   </li>
   <li class="nav-item">
-    <div class="nav-link clickable" id="followers-btn">Followers (<%= 3 %>)</a>
+    <div class="nav-link clickable" id="followers-btn">Followers (<%= @event.users.length %>)</a>
   </li>
 </ul>
 
 <div class="mt-4" id="posts">
   <div class="row my-4">
       <div class="col-12 text-right">
-        <%= link_to 'New', new_post_path(@event), class: 'btn btn-primary' %>
+        <%= link_to 'New', new_event_post_path(@event), class: 'btn btn-primary' %>
       </div>
   </div>
 
-  <div class="card bg-light mb-3">
-    <div class="card-body">
-      <h5 class="card-title">
-        <button href="#" class="btn btn-danger float-right">
-          <i class="fas fa-trash"></i>
-        </button>
-        Lorem ipsum - the beginning
-      </h5>
-      <h6 class="card-subtitle mb-2 text-muted">
-        <i class="fas fa-paper-plane"></i>&nbsp;2020. 09. 07. 23:32
-      </h6>
-      <p class="card-text">
-        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,
-        totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
-      </p>
+  <% @event.posts.each do |post| %>
+    <div class="card bg-light mb-3">
+      <div class="card-body">
+        <h5 class="card-title clickable" onclick="window.location.href = '/posts/<%= post.id %> ';">
+          <button href="#" class="btn btn-danger float-right">
+            <i class="fas fa-trash"></i>
+          </button>
+          <%= post.title %>
+        </h5>
+        <h6 class="card-subtitle mb-2 text-muted">
+          <i class="fas fa-paper-plane"></i>&nbsp;<%= l post.created_at, format: :datetime %>
+        </h6>
+        <p class="card-text">
+          <%= post.body %>
+        </p>
+      </div>
     </div>
-  </div>
+  <% end %>
 </div>
 
 <div class="mt-4 d-none" id="followers">
-  <div class="media">
-    <%= image_tag("profile.png", class: "profile-pic-mini mr-3") %>
-    <div class="media-body">
-      <h5 onclick="window.location.href = './user_events.html';" class="mb-0 mt-1 clickable">
-        Ludwig van Beethoven
-      </h5>
-      <strong>Followers:</strong> 143
+  <% @event.users do |user| %>
+    <div class="media">
+      <%= image_tag("profile.png", class: "profile-pic-mini mr-3") %>
+      <div class="media-body">
+        <h5 onclick="window.location.href = './user_events.html';" class="mb-0 mt-1 clickable">
+          <%= user.name %>
+        </h5>
+        <strong>Followers:</strong> <%= user.followers.length %>
+      </div>
     </div>
-  </div>
+  <% end %>
 </div>

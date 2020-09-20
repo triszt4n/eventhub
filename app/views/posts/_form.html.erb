@@ -1,4 +1,4 @@
-<%= form_with(model: post, local: true) do |form| %>
+<%= form_for [event, post] do |form| %>
   <% if post.errors.any? %>
     <div class="alert alert-danger my-4" role="alert">
       Error (<%= post.errors.count %>):
@@ -28,7 +28,7 @@
   </div>
 
   <div class="mt-4">
-    <%= link_to 'Back', events_path, class: 'btn btn-danger' %>
+    <%= link_to 'Back', event_path(post.event), class: 'btn btn-danger' %>
     <%= form.submit 'Save', class: 'btn btn-success float-right' %>
   </div>
 

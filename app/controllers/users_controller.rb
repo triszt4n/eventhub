@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :change_pw]
+  # before_action :set_user, only: [:show, :edit, :update, :follows, :change_pw]
 
   # GET /users/new
   def new
@@ -8,47 +8,38 @@ class UsersController < ApplicationController
 
   # POST /register
   def create
-    @user = User.new(user_params)
-    if @user.save
-      session[:user] = @user.id
-      flash[:notice] = "You've logged in."
-      redirect_back fallback_location: auth_path
-    else
-      flash[:notice] = @user.errors.messages
-      redirect_back fallback_location: auth_path
-    end
   end
 
   # GET /users/:id/edit
   def edit
-    unless session[:user] == @user.id
-      flash[:notice] = "You have no permission to edit this profile!"
-      redirect_to events_path
-    end
+    @user = User.new(id: 1, email: "asd@asd.com", name: "Wolfgang Amadeus Mozart", city: "Salzburg, AT", profile: "Classical music", 
+      about: "Wolfgang specializes in composing for the noble and royal, also he's an advocate for the plebs' cultural flourishing. Famous for his operas - Magic flute and Don Giovanni -, and for his piano concertos.", public: true)
   end
 
   # POST /users/:id/update
   def update
-    if session[:user] == @user.id
-      if @user.update(user_params)
-        redirect_back fallback_location: events_path
-      else
-        flash[:notice] = "Couldn't edit your profile!"
-        redirect_back fallback_location: events_path
-      end
-    else
-      flash[:notice] = "You have no permission to edit this profile!"
-      redirect_to events_path
-    end
   end
 
   # GET /users/:id
   def show
+    @user = User.new(id: 1, email: "asd@asd.com", name: "Wolfgang Amadeus Mozart", city: "Salzburg, AT", profile: "Classical music", 
+      about: "Wolfgang specializes in composing for the noble and royal, also he's an advocate for the plebs' cultural flourishing. Famous for his operas - Magic flute and Don Giovanni -, and for his piano concertos.", public: true)
   end
 
   # GET /users
   def index
-    @users = User.all
+    # @users = User.all
+    @users = []
+    @users << User.new(id: 1, email: "fgh@asd.com", name: "Ludwig van Beethoven", city: "Bonn, DE", profile: "Classical music", 
+      about: "Lorem ipsum dolor sit amet", public: true)
+    @users << User.new(id: 2, email: "asd@asd.com", name: "Wolfgang Amadeus Mozart", city: "Salzburg, AT", profile: "Classical music", 
+      about: "Lorem ipsum dolor sit amet", public: true)
+  end
+
+  # GET /users/:id/follows
+  def follows
+    @user = User.new(id: 1, email: "asd@asd.com", name: "Wolfgang Amadeus Mozart", city: "Salzburg, AT", profile: "Classical music", 
+      about: "Wolfgang specializes in composing for the noble and royal, also he's an advocate for the plebs' cultural flourishing. Famous for his operas - Magic flute and Don Giovanni -, and for his piano concertos.", public: true)
   end
 
   # GET /users/forgotten
@@ -57,44 +48,24 @@ class UsersController < ApplicationController
 
   # POST /users/send_forgotten
   def send_forgotten
-    @user = User.find_by(params[:user][:email])
-    pass = @user.random_password
-    # instead of emailing password:
-    flash[:notice] = "Your new password:\n#{pass}"
-    redirect_back fallback_location: auth_path
   end
 
   # GET /users/:id/change_pw
   def change_pw
-    unless session[:user] == @user.id
-      flash[:notice] = "You have no permission to edit this profile!"
-      redirect_to events_path
-    end
   end
 
   # PUT /users/:id/send_change_pw
   def send_change_pw
-    if session[:user] == @user.id
-      if @user.update(user_params)
-        redirect_back fallback_location: events_path
-      else
-        flash[:notice] = "Couldn't change password!"
-        redirect_back fallback_location: events_path
-      end
-    else
-      flash[:notice] = "You have no permission to edit this profile!"
-      redirect_to events_path
-    end
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params[:id])
-    end
+    # def set_user
+    #   @user = User.find(params[:id])
+    # end
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit(:email, :password, :password_confirmation, :name, :city, :profile, :about, :public)
+      params.require(:user).permit(:email, :password, :name, :city, :profile, :about, :public)
     end
 end

@@ -8,7 +8,7 @@
   </div>
   <div class="col">
     <h2>
-      Wolfgang Amadeus Mozart
+      <%= @user.name %>
     </h2>
     <small class="text-success">
       You're following <i class="fas fa-check"></i>
@@ -21,20 +21,19 @@
     <strong>City:</strong>
   </div>
   <div class="col-8 col-lg-10">
-    Salzburg, Austria
+    <%= @user.city %>
   </div>
   <div class="col-4 col-lg-2 pr-0 text-right">
     <strong>Main profile:</strong>
   </div>
   <div class="col-8 col-lg-10">
-    Viennese classical composer
+    <%= @user.profile %>
   </div>
   <div class="col-4 col-lg-2 pr-0 text-right">
     <strong>About:</strong>
   </div>
   <div class="col-8 col-lg-10">
-    Wolfgang specializes in composing for the noble and royal, also he's an advocate for the plebs' cultural flourishing.
-    Famous for his operas - Magic flute and Don Giovanni -, and for his piano concertos.
+    <%= @user.about %>
   </div>            
 </div>
 

@@ -11,6 +11,7 @@ Rails.application.routes.draw do
 
   get 'users/:id', to: 'users#show', as: 'profile'
   get 'users', to: 'users#index', as: 'users'
+  get 'users/:id/follows', to: 'users#follows', as: 'follows'
 
   get 'forgotten', to: 'users#forgotten', as: 'forgotten'
   post 'send_forgotten', to: 'users#send_forgotten', as: 'send_forgotten'
@@ -18,8 +19,9 @@ Rails.application.routes.draw do
   get 'users/:id/change_pw', to: 'users#change_pw', as: 'change_pw'
   put 'users/:id/send_change_pw', to: 'users#send_change_pw', as: 'send_change_pw'
 
-  resources :events
-  resources :posts
+  resources :events do
+    resources :posts
+  end
 
   root to: 'events#index'
 end

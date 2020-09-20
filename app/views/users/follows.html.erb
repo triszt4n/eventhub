@@ -1,0 +1,57 @@
+<% content_for :javascripts do %>
+  <%= javascript_pack_tag 'follows' %>
+<% end %>
+
+<div class="row justify-content-center">
+  <div class="col-12 text-center">
+    <h2 class="my-4"><%= @user.name %>'s followings</h2>
+  </div>
+</div>
+
+<ul class="nav nav-tabs mt-3">
+  <li class="nav-item">
+    <div class="nav-link active clickable" id="events-btn">Followed events (<%= @user.followed_events.length %>)</div>
+  </li>
+  <li class="nav-item">
+    <div class="nav-link clickable" id="users-btn">Followed users (<%= @user.followees.length %>)</div>
+  </li>
+</ul>
+
+<div class="mt-4" id="events">
+  <% @user.followed_events.each do |event| %>
+    <div class="card bg-light mb-3">
+      <h4 onclick="window.location.href = '/events/<%= 1 %>';" class="card-header clickable">
+        <%= event.title %>
+      </h4>
+      <div class="card-body row">
+        <div class="col-12 col-lg-6">
+          <%= event.place %>
+        </div>
+        <div class="col-12 col-lg-6 text-lg-right">
+          <strong>
+            <%= l @event.start_date, format: :datetime %> - 
+            <% if @event.start_date.to_date == @event.end_date.to_date %>
+              <%= l @event.end_date, format: :time %>
+            <% else %>
+              <%= l @event.end_date, format: :datetime %>
+            <% end %>
+          </strong>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<div class="mt-4 d-none" id="users">
+  <% @user.followees.each do |user| %>
+    <div class="media">
+      <%= image_tag("profile.png", class: "profile-pic-mini mr-3") %>
+      <div class="media-body">
+        <h5 onclick="window.location.href = '/users/<%= 1 %>';" class="mb-0 mt-1 clickable">
+          <%= user.name %>
+        </h5>
+        <strong>Followers:</strong> <%= user.followers.length %>
+      </div>
+    </div>
+  <% end %>
+</div>
