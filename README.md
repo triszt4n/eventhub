@@ -23,8 +23,7 @@ Versions used during development:
 ```bash
 bundle install
 yarn install
-rails db:create
-rails db:migrate
+rails db:setup
 ```
 
 #### Run

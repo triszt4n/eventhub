@@ -1,0 +1,15 @@
+.row.justify-content-center
+  .col-12
+    %h2.my-4 
+      Send new password
+
+= form_tag send_forgotten_path, :method => :post do
+  .form-group
+    = label_tag :email do
+      %p.m-0
+        Email address:
+      %small
+        You'll be sent a new password to use. Change it after logging in.
+    = text_field_tag :email, '', required: true, class: 'form-control'
+  .mt-3
+    = submit_tag 'Send', class: 'btn btn-success float-right'

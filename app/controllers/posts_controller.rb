@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
-  # before_action :set_post, only: [:show, :edit, :update, :destroy]
+  before_action :set_event, only: [:show, :edit]
+  before_action :set_post, only: [:show, :edit, :update, :destroy]
 
   # GET /posts/1
   def show
@@ -44,6 +45,10 @@ class PostsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_post
       @post = Post.find(params[:id])
+    end
+
+    def set_event
+      @event = Event.find(params[:event_id])
     end
 
     # Only allow a list of trusted parameters through.

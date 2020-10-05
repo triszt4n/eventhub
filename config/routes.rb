@@ -4,22 +4,16 @@ Rails.application.routes.draw do
   get 'auth', to: 'sessions#auth', as: 'auth'
 
   get 'register', to: 'users#new', as: 'register'
-  post 'register', to: 'user#create'
-
-  get 'users/:id/edit', to: 'users#edit', as: 'profile_edit'
-  put 'users/:id/update', to: 'users#update', as: 'profile_update'
-
-  get 'users/:id', to: 'users#show', as: 'profile'
-  get 'users', to: 'users#index', as: 'users'
-
+  resources :users, only: [:index, :show, :create, :update, :edit]
+  get 'users/:id/follows', to: 'users#follows', as: 'follows'
+  get 'users/:id/change_pw', to: 'users#change_pw', as: 'change_pw'
+  post 'users/:id/send_change_pw', to: 'users#send_change_pw', as: 'send_change_pw'
   get 'forgotten', to: 'users#forgotten', as: 'forgotten'
   post 'send_forgotten', to: 'users#send_forgotten', as: 'send_forgotten'
 
-  get 'users/:id/change_pw', to: 'users#change_pw', as: 'change_pw'
-  put 'users/:id/send_change_pw', to: 'users#send_change_pw', as: 'send_change_pw'
-
-  resources :events
-  resources :posts
+  resources :events do
+    resources :posts
+  end
 
   root to: 'events#index'
 end

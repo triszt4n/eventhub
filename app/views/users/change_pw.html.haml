@@ -1,0 +1,24 @@
+.row.justify-content-center
+  .col-12
+    %h2.my-4 
+      Changing password
+
+.row.justify-content-center
+  .col-lg-6
+    = form_with(model: @user, local: true, url: send_change_pw_path, method: :post) do |form|
+      = render 'layouts/errors', errors: @user.errors
+
+      .form-group
+        = form.label :old_password
+        = form.password_field :old_password, required: true, class: 'form-control'
+
+      .form-group
+        = form.label :password
+        = form.password_field :password, required: true, class: 'form-control'
+
+      .form-group
+        = form.label :password_confirmation
+        = form.password_field :password_confirmation, required: true, class: 'form-control'
+
+      .mt-3
+        = form.submit 'Save', class: 'btn btn-success float-right'

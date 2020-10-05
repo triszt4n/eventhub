@@ -1,0 +1,28 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %meta{:charset => "utf-8"}/
+    %meta{:content => "width=device-width, initial-scale=1, shrink-to-fit=no", :name => "viewport"}/
+    %title Event Hub
+    = favicon_link_tag asset_path('favicon.ico')
+    = stylesheet_link_tag 'application', media: "all"
+    = javascript_include_tag 'https://kit.fontawesome.com/735dba9ed7.js'
+    = javascript_pack_tag 'application'
+    = yield :javascripts
+  %body
+    = render 'layouts/navbar'
+    
+    .container.wrapper
+      = render 'layouts/notification'
+
+      = yield
+
+      .placeholder
+    %footer.page-footer.mt-5
+      .text-center.py-3
+        .py-0
+          Event Hub © 2020
+        .py-0
+          Developed by
+          = link_to 'triszt4n', 'https://github.com/triszt4n'

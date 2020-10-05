@@ -1,0 +1,15 @@
+.card.bg-light.mt-5
+  .card-body
+    %h5.card-title
+      %button.btn.btn-danger.float-right{:href => "#"}
+        %i.fas.fa-trash
+      = @post.title
+    %h6.card-subtitle.mb-2.text-muted
+      %i.fas.fa-paper-plane>
+      = l @post.created_at, format: :datetime
+    %p.card-text
+      = @post.body
+
+.mt-4
+  = link_to 'Back', event_path(@event), class: 'btn btn-danger'
+  = link_to 'Edit', edit_event_post_path(@event, @post), class: 'btn btn-primary float-right'

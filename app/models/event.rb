@@ -16,11 +16,15 @@ class Event < ApplicationRecord
 
   private
     def start_date_is_valid_datetime
-      errors.add(:start_date, 'must be a valid datetime') if ((DateTime.parse(start_date) rescue ArgumentError) == ArgumentError)
+      if (DateTime.parse(start_date.to_s) rescue ArgumentError) == ArgumentError
+        errors.add(:start_date, 'must be a valid datetime')
+      end
     end 
 
     def end_date_is_valid_datetime
-      errors.add(:end_date, 'must be a valid datetime') if ((DateTime.parse(end_date) rescue ArgumentError) == ArgumentError)
+      if (DateTime.parse(end_date.to_s) rescue ArgumentError) == ArgumentError
+        errors.add(:end_date, 'must be a valid datetime')
+      end
     end 
 
     def end_after_start

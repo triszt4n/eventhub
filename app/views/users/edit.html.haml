@@ -1,0 +1,47 @@
+.row.justify-content-center
+  .col-12
+    %h2.my-4
+      Edit profile
+
+= form_with(model: @user, local: true) do |form|
+  = render 'layouts/errors', errors: @user.errors
+
+  .form-group
+    = form.label :name
+    = form.text_field :name, required: true, class: 'form-control'
+
+  %p.lead.mt-3.mb-1
+    Optional data:
+
+  .form-group
+    = form.label :profile do
+      %p.m-0
+        Main profile
+      %small
+        Specify the type of events you'll organize in brief, e.g.: Pop music, TEDx tech talks.
+    = form.text_field :profile, class: 'form-control'
+
+  .form-group
+    = form.label :city do
+      %p.m-0
+        City
+      %small
+        Specify the place, where you are based.
+    = form.text_field :city, class: 'form-control'
+
+  .form-group
+    = form.label :about do
+      %p.m-0
+        About
+      %small
+        Specify the details of your profile, write about something you'd share with your subscribers.
+    = form.text_area :about, rows: 4, class: 'form-control'
+
+  .form-group
+    = form.check_box :public
+    = form.label :public, class: 'form-check-label' do
+      Make my profile public!
+
+  .mt-3
+    = link_to 'Back', events_path, class: 'btn btn-danger'
+    = form.submit 'Save', class: 'btn btn-success float-right'

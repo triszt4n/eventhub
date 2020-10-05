@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :change_pw]
+  before_action :set_user, only: [:show, :edit, :update, :follows, :change_pw, :send_change_pw]
+  before_action :check_login, only: [:edit, :update, :change_pw, :send_change_pw]
+  before_action :check_changing_pw, only: [:send_change_pw]
 
   # GET /users/new
   def new
@@ -10,35 +12,24 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      session[:user] = @user.id
-      flash[:notice] = "You've logged in."
-      redirect_back fallback_location: auth_path
+      flash[:notice] = 'Successful registration!'
+      redirect_to auth_path
     else
-      flash[:notice] = @user.errors.messages
-      redirect_back fallback_location: auth_path
+      render :new
     end
   end
 
   # GET /users/:id/edit
   def edit
-    unless session[:user] == @user.id
-      flash[:notice] = "You have no permission to edit this profile!"
-      redirect_to events_path
-    end
   end
 
   # POST /users/:id/update
   def update
-    if session[:user] == @user.id
-      if @user.update(user_params)
-        redirect_back fallback_location: events_path
-      else
-        flash[:notice] = "Couldn't edit your profile!"
-        redirect_back fallback_location: events_path
-      end
+    if @user.update(user_params)
+      flash[:notice] = "Updating your profile successful!"
+      redirect_back fallback_location: events_path
     else
-      flash[:notice] = "You have no permission to edit this profile!"
-      redirect_to events_path
+      render :edit
     end
   end
 
@@ -51,39 +42,40 @@ class UsersController < ApplicationController
     @users = User.all
   end
 
-  # GET /users/forgotten
+  # GET /users/:id/follows
+  def follows
+  end
+
+  # GET /forgotten
   def forgotten
   end
 
-  # POST /users/send_forgotten
+  # POST /send_forgotten
   def send_forgotten
-    @user = User.find_by(params[:user][:email])
-    pass = @user.random_password
-    # instead of emailing password:
-    flash[:notice] = "Your new password:\n#{pass}"
-    redirect_back fallback_location: auth_path
+    @user = User.where(email: params[:email]).take
+    unless @user
+      flash[:notice] = "No user registered under this email."
+      render :forgotten
+    else
+      pass = @user.randomize_password
+      @user.save
+      flash[:notice] = "Your new password is:\n#{pass}"
+      redirect_to auth_path
+    end
   end
 
   # GET /users/:id/change_pw
   def change_pw
-    unless session[:user] == @user.id
-      flash[:notice] = "You have no permission to edit this profile!"
-      redirect_to events_path
-    end
   end
 
   # PUT /users/:id/send_change_pw
   def send_change_pw
-    if session[:user] == @user.id
-      if @user.update(user_params)
-        redirect_back fallback_location: events_path
-      else
-        flash[:notice] = "Couldn't change password!"
-        redirect_back fallback_location: events_path
-      end
+    @user.password = params[:user][:password]
+    if @user.save
+      flash[:notice] = 'Successful change of password'
+      render :show
     else
-      flash[:notice] = "You have no permission to edit this profile!"
-      redirect_to events_path
+      render :change_pw
     end
   end
 
@@ -93,8 +85,28 @@ class UsersController < ApplicationController
       @user = User.find(params[:id])
     end
 
+    # Checking and redirecting if not logged in already
+    def check_login
+      unless session[:user] == params[:id].to_i
+        flash[:notice] = "You must be logged in to access this section!"
+        redirect_to auth_path
+      end
+    end
+
+    # Checking if the given old_password is the same as current password
+    def check_changing_pw
+      if !@user.authenticated?(params[:user][:old_password])
+        flash[:notice] = "Wrong old password!"
+        redirect_to change_pw_path
+      elsif params[:user][:password] != params[:user][:password_confirmation]
+        flash[:notice] = "New password not matching confirmation!"
+        redirect_to change_pw_path
+      end
+    end
+
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit(:email, :password, :password_confirmation, :name, :city, :profile, :about, :public)
+      params.require(:user).permit(:email, :password, :password_confirmation,
+        :name, :city, :profile, :about, :public)
     end
 end

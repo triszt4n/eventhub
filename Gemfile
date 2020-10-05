@@ -32,6 +32,8 @@ gem 'bootsnap', '>= 1.4.2', require: false
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  # Use faker for db seed
+  gem 'faker', '~> 2.14'
 end
 
 group :development do
@@ -53,3 +55,7 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+# Use haml for template engine
+gem 'haml', '~> 5.1.2'
+# Haml-rails provides haml generators
+gem 'haml-rails', '~> 2.0'
