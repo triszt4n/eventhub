@@ -1,0 +1,57 @@
+= form_with(model: event, local: true) do |form|
+  - render 'layouts/errors', errors: event.errors
+
+  .form-group
+    = form.label :title
+    = form.text_field :title, required: true, class: 'form-control'
+
+  .form-group
+    = form.label :theme do
+      %p.m-0
+        Theme(s)
+      %small
+        e.g.: Talking night, TEDx talk, Modern vehicles, Pop concert
+    = form.text_field :theme, class: 'form-control'
+
+  .form-group
+    = form.label :start_date do
+      Starting date and time
+    = form.datetime_field :start_date, required: true, class: 'form-control'
+
+  .form-group
+    = form.label :end_date do
+      %p.m-0
+        Ending date and time
+      %small
+        Leaving it blank will define no ending for the event.
+    = form.datetime_field :end_date, class: 'form-control'
+
+  .form-group
+    = form.label :place do
+      Place of event
+    = form.text_field :place, class: 'form-control'
+
+  .form-group
+    = form.label :short_desc do
+      %p.m-0
+        Short description
+      %small 
+        Summary of the event that will show up on the events page.
+    = form.text_area :short_desc, rows: 2, class: 'form-control'
+
+  .form-group
+    = form.label :full_desc do
+      %p.m-0
+        Description
+      %small
+        Mention every detail of your event in this field.
+    = form.text_area :full_desc, rows: 4, class: 'form-control'
+
+  .form-group
+    = form.check_box :published
+    = form.label :published, class: 'form-check-label' do
+      Publish this event to the events page!
+
+  .mt-4
+    = link_to 'Back', events_path, class: 'btn btn-danger'
+    = form.submit 'Save', class: 'btn btn-success float-right'

@@ -1,6 +1,10 @@
 {
   "name": "eventhub",
-  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/triszt4n/eventhub"
+  },
+  "description": "Media app for sharing events with your future and present fans.",
   "dependencies": {
     "@rails/actioncable": "^6.0.0",
     "@rails/activestorage": "^6.0.0",
@@ -11,6 +15,7 @@
     "popper.js": "^1.16.1",
     "turbolinks": "^5.2.0"
   },
+  "license": "MIT",
   "version": "0.1.0",
   "devDependencies": {
     "webpack-dev-server": "^3.11.0"

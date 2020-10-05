@@ -1,0 +1,23 @@
+.row
+  .col-12.text-center
+    = image_tag "eventhub-icon.svg", class: 'd-inline-block profile-pic mt-3 invert-pic'
+    %h2.mt-2 
+      Event Hub
+    %p.mt-5
+      Log in using your email address and password
+
+.row.justify-content-center
+  .col-lg-6
+    = form_tag login_path, :method => :post do
+      .form-group
+        = label_tag :email, 'Email address'
+        = text_field_tag :email, '', required: true, class: 'form-control'
+        = link_to 'Not a member yet? Register here.', register_path
+
+      .form-group
+        = label_tag :password, 'Password'
+        = password_field_tag :password, '', required: true, class: 'form-control'
+        = link_to 'Forgot your password?', forgotten_path
+        
+      .mt-3
+        = submit_tag 'Log in', class: 'btn btn-success float-right'

@@ -1,0 +1,94 @@
+- content_for :javascripts do
+  = javascript_pack_tag 'events'
+
+.row.mt-5
+  .col-12.col-lg-10
+    %h2
+      = @event.title
+    /
+      <small class="text-success">
+      You're following <i class="fas fa-check"></i>
+      </small>
+  .col-12.col-lg-2.mt-3.mt-lg-0.text-right
+    %form{:action => "/follow", :method => "POST"}
+      / alternative: javascript file fetch function!
+      - if false
+        %button.btn.btn-block.btn-outline-primary{:type => "submit"}
+          Follow event
+      - elsif false
+        %button.btn.btn-block.btn-outline-danger{:type => "submit"}
+          Unfollow event
+      - else
+        = link_to 'Edit', edit_event_path(@event), class: 'btn btn-info'
+        = link_to 'Delete', '#', class: 'btn btn-danger'
+
+.mt-5
+  .row.mb-5.lead
+    .col-12.col-lg-5
+      = @event.place
+    .col-12.col-lg-7.text-lg-right
+      %strong
+        = l @event.start_date, format: :datetime
+        \-
+        - if @event.start_date.to_date == @event.end_date.to_date
+          = l @event.end_date, format: :time
+        - else
+          = l @event.end_date, format: :datetime
+  .row.mb-2
+    .font-weight-bold.col-12.col-lg-auto
+      Theme of event:
+    .col-12.col-lg-9
+      = @event.theme
+  .row
+    .font-weight-bold.col-12.col-lg-auto
+      Full description:
+    .col-12.col-lg-9
+      = @event.full_desc
+.row.mt-5.justify-content-end
+  .col-auto
+    %strong Organized by:
+    .media
+      = image_tag "profile.png", class: "profile-pic-mini mr-3"
+      .media-body
+        %h5.mb-0.mt-1.clickable{:onclick => "window.location.href = '#{user_path(@event.user)}';"}
+          = @event.user.name
+        %strong Followers:
+        = @event.user.followers.length
+    %form{:action => "/follow", :method => "POST"}
+      / alternative: javascript file fetch function!
+      %button.btn.btn-sm.btn-outline-primary.float-right{:type => "submit"}
+        Follow
+%ul.nav.nav-tabs.mt-5
+  %li.nav-item
+    #posts-btn.nav-link.clickable.active
+      = "Posts (#{@event.posts.length})"
+      %li.nav-item
+        #followers-btn.nav-link.clickable
+          = "Followers (#{@event.users.length})"
+
+#posts.mt-4
+  .row.my-4
+    .col-12.text-right
+      = link_to 'New', new_event_post_path(@event), class: 'btn btn-primary'
+  - @event.posts.each do |post|
+    .card.bg-light.mb-3
+      .card-body
+        %h5.card-title.clickable{:onclick => "window.location.href = '#{post_path(post)} ';"}
+          %button.btn.btn-danger.float-right{:href => "#"}
+            %i.fas.fa-trash
+          = post.title
+        %h6.card-subtitle.mb-2.text-muted
+          %i.fas.fa-paper-plane
+          = l post.created_at, format: :datetime
+        %p.card-text
+          = post.body
+
+#followers.mt-4.d-none
+  - @event.users do |user|
+    .media
+      = image_tag "profile.png", class: "profile-pic-mini mr-3"
+      .media-body
+        %h5.mb-0.mt-1.clickable{:onclick => "window.location.href = './user_events.html';"}
+          = user.name
+        %strong Followers:
+        = user.followers.length

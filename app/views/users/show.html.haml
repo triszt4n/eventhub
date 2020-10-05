@@ -1,0 +1,78 @@
+- content_for :javascripts do
+  = javascript_pack_tag 'users'
+
+.row.mt-5
+  .col-auto
+    = image_tag("profile.png", class: "profile-pic")
+  .col
+    %h2
+      = @user.name
+    %small.text-success
+      You're following
+      %i.fas.fa-check
+
+.row.mt-4
+  .col-4.col-lg-2.pr-0.text-right
+    %strong City:
+  .col-8.col-lg-10
+    = @user.city
+  .col-4.col-lg-2.pr-0.text-right
+    %strong Main profile:
+  .col-8.col-lg-10
+    = @user.profile
+  .col-4.col-lg-2.pr-0.text-right
+    %strong About:
+  .col-8.col-lg-10
+    = @user.about
+
+.row.mt-3.justify-content-md-end
+  .col-12.col-md-2
+    %form{:action => "/follow", :method => "POST"}
+      / alternative: javascript file fetch function!
+      %button.btn.btn-block.btn-outline-danger{:type => "submit"}
+        Unfollow
+
+%ul.nav.nav-tabs.mt-3
+  %li.nav-item
+    #events-btn.nav-link.active.clickable
+      = "Events (#{1})"
+  %li.nav-item
+    #followers-btn.nav-link.clickable
+      = "Followers (#{1})"
+
+#events.mt-4
+  .row.my-4
+    .col-12.text-right
+      = link_to 'New', new_event_path, class: 'btn btn-primary'
+  .card.text-white.bg-secondary.mb-3
+    %h4.card-header.clickable{:onclick => "window.location.href = '/events/#{1}';"}
+      Debut of Piano concerto no. 20 in d minor
+    .card-body
+      .row.mb-3
+        .lead.col-12.col-lg-3.text-lg-right
+          Short description:
+        .col-12.col-lg-9.pt-1
+          Highly acclaimed by his father, this concerto will be a monumental one for the new classical period of music.
+      .row.mb-2
+        .lead.col-12.col-lg-3.text-lg-right
+          Coordinates:
+        .col-12.col-lg-9.pt-1
+          %p.mb-1
+            Schönbrunn Castle, Austria
+          %p.m-0
+            %strong
+              2020. 10. 10. 10:00 - 13:30
+      .row
+        .lead.col-12.col-lg-3.text-lg-right
+          Theme of event:
+        .col-12.col-lg-9.pt-1
+          Classical music
+
+#followers.mt-4.d-none
+  .media
+    = image_tag "profile.png", class: "profile-pic-mini mr-3"
+    .media-body
+      %h5.mb-0.mt-1.clickable{:onclick => "window.location.href = '/users/#{1}';"}
+        Ludwig van Beethoven
+      %strong Subscribers:
+      143
