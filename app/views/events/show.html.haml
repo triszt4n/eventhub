@@ -44,6 +44,7 @@
       Full description:
     .col-12.col-lg-9
       = @event.full_desc
+
 .row.mt-5.justify-content-end
   .col-auto
     %strong Organized by:
@@ -58,13 +59,14 @@
       / alternative: javascript file fetch function!
       %button.btn.btn-sm.btn-outline-primary.float-right{:type => "submit"}
         Follow
+
 %ul.nav.nav-tabs.mt-5
   %li.nav-item
     #posts-btn.nav-link.clickable.active
       = "Posts (#{@event.posts.length})"
-      %li.nav-item
-        #followers-btn.nav-link.clickable
-          = "Followers (#{@event.users.length})"
+  %li.nav-item
+    #followers-btn.nav-link.clickable
+      = "Followers (#{@event.users.length})"
 
 #posts.mt-4
   .row.my-4
@@ -73,7 +75,7 @@
   - @event.posts.each do |post|
     .card.bg-light.mb-3
       .card-body
-        %h5.card-title.clickable{:onclick => "window.location.href = '#{post_path(post)} ';"}
+        %h5.card-title.clickable{:onclick => "window.location.href = '#{event_post_path(@event, post)} ';"}
           %button.btn.btn-danger.float-right{:href => "#"}
             %i.fas.fa-trash
           = post.title

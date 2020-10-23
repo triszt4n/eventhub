@@ -35,6 +35,9 @@ class UsersController < ApplicationController
 
   # GET /users/:id
   def show
+    unless @user.public
+      render :file => "public/401.html"
+    end
   end
 
   # GET /users

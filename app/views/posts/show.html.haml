@@ -1,11 +1,11 @@
 .card.bg-light.mt-5
   .card-body
     %h5.card-title
-      %button.btn.btn-danger.float-right{:href => "#"}
+      = button_to @recipe, :method => :delete, class: "btn btn-danger float-right", confirm: 'Are you sure?' do
         %i.fas.fa-trash
       = @post.title
     %h6.card-subtitle.mb-2.text-muted
-      %i.fas.fa-paper-plane>
+      %i.fas.fa-paper-plane
       = l @post.created_at, format: :datetime
     %p.card-text
       = @post.body

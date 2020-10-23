@@ -8,6 +8,9 @@ class EventsController < ApplicationController
 
   # GET /events/1
   def show
+    unless @event.published
+      render :file => "public/401.html"
+    end
   end
 
   # GET /events/new

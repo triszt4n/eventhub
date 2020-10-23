@@ -16,15 +16,17 @@ Versions used during development:
 
 * Ruby
 * Rails
-* MySQL/MariaDB (mariadb >=10.3.22)
+* MySQL/MariaDB [Optional, use docker-compose instead]
 
 #### First steps
 
 ```bash
 bundle install
 yarn install
+docker-compose up
 rails db:setup
 ```
+*In case of using docker, keep the docker image running*
 
 #### Run
 

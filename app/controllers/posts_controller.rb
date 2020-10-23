@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :set_event, only: [:show, :edit]
+  before_action :set_event, only: [:show, :edit, :destroy]
   before_action :set_post, only: [:show, :edit, :update, :destroy]
 
   # GET /posts/1
@@ -38,7 +38,7 @@ class PostsController < ApplicationController
   # DELETE /posts/1
   def destroy
     @post.destroy
-    redirect_to posts_url
+    redirect_to @event
   end
 
   private
