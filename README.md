@@ -36,8 +36,3 @@ rails s
 
 #### Testing
 ...
-
-#### Things that might need to be fixed
-* N+1 queries project-wide
-* Rewrite subscription buttons to use simple ajax (no reloading)
-* Migrate frontend filters to the backend
