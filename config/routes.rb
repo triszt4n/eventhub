@@ -9,8 +9,11 @@ Rails.application.routes.draw do
   post 'users/:id/send_change_pw', to: 'users#send_change_pw', as: 'send_change_pw'
   get 'forgotten', to: 'users#forgotten', as: 'forgotten'
   post 'send_forgotten', to: 'users#send_forgotten', as: 'send_forgotten'
+  post 'users/:id/follow', to: 'users#follow', as: 'user_follow'
 
   resources :events
+  post 'events/:id/follow', to: 'events#follow', as: 'event_follow'
+
   resources :posts, only: [:show, :edit, :create, :new, :update, :destroy]
 
   root to: 'events#index'

@@ -1,5 +1,9 @@
 class EventsController < ApplicationController
-  before_action :set_event, only: [:show, :edit, :update, :destroy]
+  before_action :set_event, only: [:show, :edit, :update, :destroy, :follow]
+  before_action :check_login, only: [:follow, :edit, :update, :destroy]
+  before_action :check_self_follow, only: [:follow]
+  before_action :check_permission, only: [:edit, :update, :destroy]
+  before_action :check_published, only: [:show, :follow]
 
   # GET /events
   def index
@@ -8,9 +12,6 @@ class EventsController < ApplicationController
 
   # GET /events/1
   def show
-    unless @event.published
-      render :file => "public/401.html"
-    end
   end
 
   # GET /events/new
@@ -25,6 +26,7 @@ class EventsController < ApplicationController
   # POST /events
   def create
     @event = Event.new(event_params)
+    @event.user = @current_user
 
     if @event.save
       redirect_to @event
@@ -44,14 +46,56 @@ class EventsController < ApplicationController
 
   # DELETE /events/1
   def destroy
+    @event.posts.destroy_all
     @event.destroy
     redirect_to events_url
+  end
+
+  # POST /events/1/follow
+  def follow
+    if helpers.am_i_following_event?
+      EventFollow.find_by(event: @event, user: @current_user).destroy
+    else
+      EventFollow.create(event: @event, user: @current_user)
+    end
+    redirect_to @event
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_event
       @event = Event.find(params[:id])
+    end
+
+    # Check if the owner wants to follow their own event
+    def check_self_follow
+      if helpers.am_i_owner?
+        flash[:notice] = "You can't follow your own event!"
+        redirect_to @event
+      end
+    end
+
+    # Check if the user is logged in sending request
+    def check_login
+      unless helpers.logged_in?
+        flash[:notice] = "You need to log in first!"
+        redirect_to auth_path
+      end
+    end
+
+    # Check if the owner sent this request
+    def check_permission
+      unless helpers.am_i_owner?
+        flash[:notice] = "You are not permitted to make changes!"
+        redirect_to @event
+      end
+    end
+
+    # Check if the event is set to published
+    def check_published
+      if !@event.published && !helpers.am_i_owner?
+        render_401
+      end
     end
 
     # Only allow a list of trusted parameters through.

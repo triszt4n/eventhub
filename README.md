@@ -36,3 +36,6 @@ rails s
 
 #### Testing
 ...
+
+#### Things that might need to be fixed
+* N+1 queries project-wide

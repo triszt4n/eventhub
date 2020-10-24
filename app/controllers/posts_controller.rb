@@ -1,6 +1,8 @@
 class PostsController < ApplicationController
-  before_action :set_event, only: [:show, :edit, :destroy]
   before_action :set_post, only: [:show, :edit, :update, :destroy]
+  before_action :set_event, only: [:new, :create]
+  before_action :check_permission, only: [:edit, :update, :destroy]
+  before_action :check_published, only: [:show]
 
   # GET /posts/1
   def show
@@ -18,9 +20,10 @@ class PostsController < ApplicationController
   # POST /posts
   def create
     @post = Post.new(post_params)
+    @post.event = @event
 
     if @post.save
-      redirect_to @post
+      redirect_to @post.event
     else
       render :new
     end
@@ -37,18 +40,39 @@ class PostsController < ApplicationController
 
   # DELETE /posts/1
   def destroy
+    event = @post.event
     @post.destroy
-    redirect_to @event
+    redirect_to event
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_post
       @post = Post.find(params[:id])
+      puts @post.to_yaml
     end
 
     def set_event
-      @event = Event.find(params[:event_id])
+      @event = Event.find params[:event_id]
+      unless helpers.am_i_owner?
+        flash[:notice] = "You have no permission to make changes!"
+        redirect_to @event
+      end
+    end
+
+    # Check if the owner sent the request
+    def check_permission
+      unless helpers.am_i_poster?
+        flash[:notice] = "You have no permission to make changes!"
+        redirect_to @post
+      end
+    end
+
+    # Check if the owner event is set to published
+    def check_published
+      if !@post.event.published && !helpers.am_i_poster?
+        render_401
+      end
     end
 
     # Only allow a list of trusted parameters through.

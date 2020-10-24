@@ -3,27 +3,30 @@
     Public profiles
 
 .row.row-cols-1.row-cols-lg-2
-  - @users.each do |user|
-    - if user.public
-      .col.mb-4
-        .card.clickable{:onclick => "window.location.href = '#{user_path(user)}';"}
-          .card-body
-            .row
-              .col-auto.pr-0
-                = image_tag "profile.png", class: "profile-pic-mid"
-              .col
-                %h4.card-title
-                  = user.name
-                .card-text
-                  %p.m-0
-                    %strong City:
-                    = user.city
-                  %p.m-0
-                    %strong Events:
-                    12
-                  %p.m-0
-                    %strong Main profile:
-                    = user.profile
-                  %p.m-0
-                    %strong Followers:
-                    25 671
+  - users = @users.filter(&:public).each do |user|
+    .col.mb-4
+      .card.clickable{:onclick => "window.location.href = '#{user_path(user)}';"}
+        .card-body
+          .row
+            .col-auto.pr-0
+              = image_tag "profile.png", class: "profile-pic-mid"
+            .col
+              %h4.card-title
+                = user.name
+              .card-text
+                %p.m-0
+                  %strong City:
+                  = user.city
+                %p.m-0
+                  %strong Events:
+                  = user.events.length
+                %p.m-0
+                  %strong Main profile:
+                  = user.profile
+                %p.m-0
+                  %strong Followers:
+                  = user.followers.length
+  - if users.empty?
+    .row.my-4
+      .col-12.text-center.text-muted.font-italic
+        No public profiles found

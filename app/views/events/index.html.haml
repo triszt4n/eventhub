@@ -4,38 +4,41 @@
   .col-4.text-right
     = link_to 'New', new_event_path, class: 'btn btn-primary float-lg-right'
     
-- @events.each do |event| 
-  - if event.published
-    .card.text-white.bg-secondary.mb-3
-      %h4.card-header.clickable{:onclick => "window.location.href = '/events/#{event.id}';"}
-        = event.title
-      .card-body
-        .row.mb-2
-          .lead.col-12.col-lg-3.text-lg-right
-            Organized by:
-          .col-12.col-lg-9.pt-1
-            = event.user.name
-        .row.mb-3
-          .lead.col-12.col-lg-3.text-lg-right
-            Short description:
-          .col-12.col-lg-9.pt-1
-            = event.short_desc
-        .row.mb-2
-          .lead.col-12.col-lg-3.text-lg-right
-            Coordinates:
-          .col-12.col-lg-9.pt-1
-            %p.mb-1
-              = event.place
-            %p.m-0
-              %strong
-                = l event.start_date, format: :datetime
-                \-
-                - if event.start_date.to_date == event.end_date.to_date
-                  = l event.end_date, format: :time
-                - else
-                  = l event.end_date, format: :datetime
-        .row
-          .lead.col-12.col-lg-3.text-lg-right
-            Theme of event:
-          .col-12.col-lg-9.pt-1
-            = event.theme
+- events = @events.filter(&:published).each do |event| 
+  .card.text-white.bg-secondary.mb-3
+    %h4.card-header.clickable{:onclick => "window.location.href = '/events/#{event.id}';"}
+      = event.title
+    .card-body
+      .row.mb-2
+        .lead.col-12.col-lg-3.text-lg-right
+          Organized by:
+        .col-12.col-lg-9.pt-1
+          = event.user.name
+      .row.mb-3
+        .lead.col-12.col-lg-3.text-lg-right
+          Short description:
+        .col-12.col-lg-9.pt-1
+          = event.short_desc
+      .row.mb-2
+        .lead.col-12.col-lg-3.text-lg-right
+          Coordinates:
+        .col-12.col-lg-9.pt-1
+          %p.mb-1
+            = event.place
+          %p.m-0
+            %strong
+              = l event.start_date, format: :datetime
+              \-
+              - if event.start_date.to_date == event.end_date.to_date
+                = l event.end_date, format: :time
+              - else
+                = l event.end_date, format: :datetime
+      .row
+        .lead.col-12.col-lg-3.text-lg-right
+          Theme of event:
+        .col-12.col-lg-9.pt-1
+          = event.theme
+- if events.empty?
+  .row.my-4
+    .col-12.text-center.text-muted.font-italic
+      No published events found
