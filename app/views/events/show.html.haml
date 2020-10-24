@@ -105,7 +105,8 @@
           = post.body
 
 #followers.mt-4.d-none
-  - users = @event.users.filter(&:public).each do |user|
+  - users = @event.users.filter { |u| u.public || u.id == @current_user.id }
+  - users.each do |user|
     .media
       = image_tag "profile.png", class: "profile-pic-mini mr-3"
       .media-body
