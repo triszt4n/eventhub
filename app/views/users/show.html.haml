@@ -88,7 +88,7 @@
         No published events found
 
 #followers.mt-4.d-none
-  - followers = @user.followers.filter { |u| u.public || u.id == @current_user.id }
+  - followers = @user.followers.filter { |u| u.public || (!@current_user.nil? && u.id == @current_user.id) }
   - followers.each do |user|
     .media
       = image_tag "profile.png", class: "profile-pic-mini mr-3"

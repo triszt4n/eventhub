@@ -105,13 +105,16 @@
           = post.body
 
 #followers.mt-4.d-none
-  - users = @event.users.filter { |u| u.public || u.id == @current_user.id }
+  - users = @event.users.filter { |u| u.public || (!@current_user.nil? && u.id == @current_user.id) }
   - users.each do |user|
     .media
       = image_tag "profile.png", class: "profile-pic-mini mr-3"
       .media-body
         %h5.mb-0.mt-1.clickable{:onclick => "window.location.href = '#{user_path(user)}';"}
           = user.name
+          - if user.id == @current_user.id
+            .badge.badge-success.align-top
+              You
         %strong Followers:
         = user.followers.length
   - if users.empty?
