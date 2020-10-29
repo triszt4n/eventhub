@@ -7,9 +7,14 @@
   .col
     %h2
       = @user.name
-    %small.text-success
-      You're following
-      %i.fas.fa-check
+    - if am_i_following_user?
+      %small.text-success
+        You're following
+        %i.fas.fa-check
+    - unless @user.public
+      %small.text-muted
+        %i.fas.fa-exclamation-circle
+        Profile is not public
 
 .row.mt-4
   .col-4.col-lg-2.pr-0.text-right
@@ -25,54 +30,77 @@
   .col-8.col-lg-10
     = @user.about
 
-.row.mt-3.justify-content-md-end
-  .col-12.col-md-2
-    %form{:action => "/follow", :method => "POST"}
-      / alternative: javascript file fetch function!
-      %button.btn.btn-block.btn-outline-danger{:type => "submit"}
-        Unfollow
+- if !is_it_me? && logged_in?
+  .row.mt-3.justify-content-md-end
+    .col-12.col-md-2
+      = form_tag user_follow_path(@user), method: "post" do
+        - if am_i_following_user?
+          = submit_tag 'Unfollow', class: 'btn btn-block btn-outline-danger'
+        - else
+          = submit_tag 'Follow', class: 'btn btn-block btn-outline-primary'
 
 %ul.nav.nav-tabs.mt-3
   %li.nav-item
     #events-btn.nav-link.active.clickable
-      = "Events (#{1})"
+      = "Events (#{@user.events.length})"
   %li.nav-item
     #followers-btn.nav-link.clickable
-      = "Followers (#{1})"
+      = "Followers (#{@user.followers.length})"
 
 #events.mt-4
-  .row.my-4
-    .col-12.text-right
-      = link_to 'New', new_event_path, class: 'btn btn-primary'
-  .card.text-white.bg-secondary.mb-3
-    %h4.card-header.clickable{:onclick => "window.location.href = '/events/#{1}';"}
-      Debut of Piano concerto no. 20 in d minor
-    .card-body
-      .row.mb-3
-        .lead.col-12.col-lg-3.text-lg-right
-          Short description:
-        .col-12.col-lg-9.pt-1
-          Highly acclaimed by his father, this concerto will be a monumental one for the new classical period of music.
-      .row.mb-2
-        .lead.col-12.col-lg-3.text-lg-right
-          Coordinates:
-        .col-12.col-lg-9.pt-1
-          %p.mb-1
-            Schönbrunn Castle, Austria
-          %p.m-0
-            %strong
-              2020. 10. 10. 10:00 - 13:30
-      .row
-        .lead.col-12.col-lg-3.text-lg-right
-          Theme of event:
-        .col-12.col-lg-9.pt-1
-          Classical music
+  - events = is_it_me? ? @user.events : @user.events.filter(&:published)
+  - events.each do |event|
+    - if is_it_me?
+      .row.my-4
+        .col-12.text-right
+          = link_to 'New', new_event_path, class: 'btn btn-primary'
+    .card.text-white.bg-secondary.mb-3
+      %h4.card-header.clickable{:onclick => "window.location.href = '#{event_path(event)}';"}
+        = event.title
+      .card-body
+        .row.mb-3
+          .lead.col-12.col-lg-3.text-lg-right
+            Short description:
+          .col-12.col-lg-9.pt-1
+            = event.short_desc
+        .row.mb-2
+          .lead.col-12.col-lg-3.text-lg-right
+            Coordinates:
+          .col-12.col-lg-9.pt-1
+            %p.mb-1
+              = event.place
+            %p.m-0
+              %strong
+                = l event.start_date, format: :datetime
+                \-
+                - if event.start_date.to_date == event.end_date.to_date
+                  = l event.end_date, format: :time
+                - else
+                  = l event.end_date, format: :datetime
+        .row
+          .lead.col-12.col-lg-3.text-lg-right
+            Theme of event:
+          .col-12.col-lg-9.pt-1
+            = event.theme
+  - if events.empty?
+    .row.my-4
+      .col-12.text-center.text-muted.font-italic
+        No published events found
 
 #followers.mt-4.d-none
-  .media
-    = image_tag "profile.png", class: "profile-pic-mini mr-3"
-    .media-body
-      %h5.mb-0.mt-1.clickable{:onclick => "window.location.href = '/users/#{1}';"}
-        Ludwig van Beethoven
-      %strong Subscribers:
-      143
+  - followers = @user.followers.filter { |u| u.public || (!@current_user.nil? && u.id == @current_user.id) }
+  - followers.each do |user|
+    .media
+      = image_tag "profile.png", class: "profile-pic-mini mr-3"
+      .media-body
+        %h5.mb-0.mt-1.clickable{:onclick => "window.location.href = '#{user_path(user)}';"}
+          = user.name
+          - if user.id == @current_user.id
+            .badge.badge-success.align-top
+              You
+        %strong Subscribers:
+        = user.followers.length
+  - if followers.empty?
+    .row.my-4
+      .col-12.text-center.text-muted.font-italic
+        No public profiles found

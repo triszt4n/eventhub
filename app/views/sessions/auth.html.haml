@@ -12,7 +12,7 @@
       .form-group
         = label_tag :email, 'Email address'
         = text_field_tag :email, '', required: true, class: 'form-control'
-        = link_to 'Not a member yet? Register here.', register_path
+        = link_to 'Not a member yet? Register here.', new_user_path
 
       .form-group
         = label_tag :password, 'Password'

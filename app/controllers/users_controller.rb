@@ -1,7 +1,10 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :follows, :change_pw, :send_change_pw]
-  before_action :check_login, only: [:edit, :update, :change_pw, :send_change_pw]
+  before_action :set_user, only: [:show, :edit, :update, :follows, :change_pw, :send_change_pw, :follow]
+  before_action :check_login, only: [:follow, :edit, :update, :change_pw, :send_change_pw]
+  before_action :check_permission, only: [:edit, :update, :change_pw, :send_change_pw]
   before_action :check_changing_pw, only: [:send_change_pw]
+  before_action :check_self_follow, only: [:follow]
+  before_action :check_public, only: [:show, :follows, :follow]
 
   # GET /users/new
   def new
@@ -79,21 +82,47 @@ class UsersController < ApplicationController
     end
   end
 
+  # POST /users/:id/follow
+  def follow
+    if helpers.am_i_following_user?
+      UserFollow.find_by(follower: @current_user, followee: @user).destroy
+    else
+      UserFollow.create(follower: @current_user, followee: @user)
+    end
+    redirect_back fallback_location: @user
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
       @user = User.find(params[:id])
     end
 
-    # Checking and redirecting if not logged in already
-    def check_login
-      unless session[:user] == params[:id].to_i
-        flash[:notice] = "You must be logged in to access this section!"
+    # Check if the original user made the request
+    def check_permission
+      unless helpers.is_it_me?
+        flash[:notice] = "You are not permitted to make changes, log in!"
         redirect_to auth_path
       end
     end
 
-    # Checking if the given old_password is the same as current password
+    # Check if the user is logged in sending request
+    def check_login
+      unless helpers.logged_in?
+        flash[:notice] = "You need to log in first!"
+        redirect_to auth_path
+      end
+    end
+
+    # Check if the user want to follow theirselves
+    def check_self_follow
+      if helpers.is_it_me?
+        flash[:notice] = "You can't follow yourself!"
+        redirect_to @user
+      end
+    end
+
+    # Check if the given old_password is the same as current password
     def check_changing_pw
       if !@user.authenticated?(params[:user][:old_password])
         flash[:notice] = "Wrong old password!"
@@ -101,6 +130,13 @@ class UsersController < ApplicationController
       elsif params[:user][:password] != params[:user][:password_confirmation]
         flash[:notice] = "New password not matching confirmation!"
         redirect_to change_pw_path
+      end
+    end
+
+    # Check if user wants to share their profile
+    def check_public
+      if !@user.public && !helpers.is_it_me?
+        render_401
       end
     end
 

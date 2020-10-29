@@ -1,4 +1,8 @@
-.row.justify-content-center
+- content_for :hidden_tag_event_id do
+  = hidden_field_tag :event_id, @event.id
+
+.row.justify-content-center.my-4
   .col-12
-    %h2.my-4 Send post to event
-= render 'form', :locals => { :post => @post, :event => @event]
+    %h2 Send post to event
+    = @event.title
+= render 'form', post: @post

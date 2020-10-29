@@ -1,15 +1,21 @@
-.card.bg-light.mt-5
+.mt-5.mb-2
+  .h3.font-italic
+    = @post.event.title
+
+.card.bg-light
   .card-body
     %h5.card-title
-      %button.btn.btn-danger.float-right{:href => "#"}
-        %i.fas.fa-trash
+      - if am_i_poster?
+        = button_to @post, :method => :delete, class: "btn btn-danger float-right", data: {confirm: "Are you sure?"} do
+          %i.fas.fa-trash
       = @post.title
     %h6.card-subtitle.mb-2.text-muted
-      %i.fas.fa-paper-plane>
+      %i.fas.fa-paper-plane
       = l @post.created_at, format: :datetime
     %p.card-text
       = @post.body
 
 .mt-4
-  = link_to 'Back', event_path(@event), class: 'btn btn-danger'
-  = link_to 'Edit', edit_event_post_path(@event, @post), class: 'btn btn-primary float-right'
+  = link_to 'Back', event_path(@post.event), class: 'btn btn-danger'
+  - if am_i_poster?
+    = link_to 'Edit', edit_post_path(@post), class: 'btn btn-primary float-right'

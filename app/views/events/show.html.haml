@@ -5,22 +5,26 @@
   .col-12.col-lg-10
     %h2
       = @event.title
-    /
-      <small class="text-success">
-      You're following <i class="fas fa-check"></i>
-      </small>
+    - if am_i_following_event?
+      %small.text-success
+        You're following
+        %i.fas.fa-check
+    - unless @event.published
+      %small.text-danger
+        %i.fas.fa-exclamation-circle
+        Event is not published yet!
   .col-12.col-lg-2.mt-3.mt-lg-0.text-right
-    %form{:action => "/follow", :method => "POST"}
-      / alternative: javascript file fetch function!
-      - if false
-        %button.btn.btn-block.btn-outline-primary{:type => "submit"}
-          Follow event
-      - elsif false
-        %button.btn.btn-block.btn-outline-danger{:type => "submit"}
-          Unfollow event
-      - else
-        = link_to 'Edit', edit_event_path(@event), class: 'btn btn-info'
-        = link_to 'Delete', '#', class: 'btn btn-danger'
+    - if am_i_owner?
+      = link_to 'Edit', edit_event_path(@event), class: 'btn btn-info'
+      = form_tag @event, method: "delete", class: "d-inline-block" do
+        = submit_tag 'Delete', class: 'btn btn-danger', data: {confirm: "Are you sure?"}
+    - elsif logged_in?
+      = form_tag event_follow_path(@event), method: "post" do
+        - if am_i_following_event?
+          = submit_tag 'Unfollow event', class: 'btn btn-block btn-outline-danger'
+        - else
+          = submit_tag 'Follow event', class: 'btn btn-block btn-outline-primary'
+        
 
 .mt-5
   .row.mb-5.lead
@@ -44,39 +48,56 @@
       Full description:
     .col-12.col-lg-9
       = @event.full_desc
+
 .row.mt-5.justify-content-end
   .col-auto
     %strong Organized by:
-    .media
-      = image_tag "profile.png", class: "profile-pic-mini mr-3"
-      .media-body
-        %h5.mb-0.mt-1.clickable{:onclick => "window.location.href = '#{user_path(@event.user)}';"}
-          = @event.user.name
-        %strong Followers:
-        = @event.user.followers.length
-    %form{:action => "/follow", :method => "POST"}
-      / alternative: javascript file fetch function!
-      %button.btn.btn-sm.btn-outline-primary.float-right{:type => "submit"}
-        Follow
+    - if @event.user.public || am_i_owner?
+      .media
+        = image_tag "profile.png", class: "profile-pic-mini mr-3"
+        .media-body
+          %h5.mb-0.mt-1.clickable{:onclick => "window.location.href = '#{user_path(@event.user)}';"}
+            = @event.user.name
+          %strong Followers:
+          = @event.user.followers.length
+      - if logged_in? && !am_i_owner?
+        = form_tag user_follow_path(@event.user), method: "post" do
+          - if am_i_following_owner?
+            = submit_tag 'Unfollow', class: 'btn btn-sm btn-outline-danger float-right'
+          - else
+            = submit_tag 'Follow', class: 'btn btn-sm btn-outline-primary float-right'
+    - else
+      .media
+        .media-body
+          %h5.mb-0.mt-1
+            = @event.user.name
+          .text-muted.font-italic
+            Profile not public
+
 %ul.nav.nav-tabs.mt-5
   %li.nav-item
     #posts-btn.nav-link.clickable.active
       = "Posts (#{@event.posts.length})"
-      %li.nav-item
-        #followers-btn.nav-link.clickable
-          = "Followers (#{@event.users.length})"
+  %li.nav-item
+    #followers-btn.nav-link.clickable
+      = "Followers (#{@event.users.length})"
 
 #posts.mt-4
-  .row.my-4
-    .col-12.text-right
-      = link_to 'New', new_event_post_path(@event), class: 'btn btn-primary'
+  - if am_i_owner?
+    .row.my-4
+      .col-12.text-right
+        = form_tag new_post_path, method: "get" do
+          = hidden_field_tag :event_id, @event.id
+          = submit_tag 'New', class: 'btn btn-primary'
   - @event.posts.each do |post|
     .card.bg-light.mb-3
       .card-body
-        %h5.card-title.clickable{:onclick => "window.location.href = '#{post_path(post)} ';"}
-          %button.btn.btn-danger.float-right{:href => "#"}
-            %i.fas.fa-trash
-          = post.title
+        %h5.card-title
+          - if am_i_owner?
+            = button_to post, :method => :delete, class: "btn btn-danger float-right", data: {confirm: "Are you sure?"} do
+              %i.fas.fa-trash
+          .clickable{:onclick => "window.location.href = '#{post_path(post)}';"}
+            = post.title
         %h6.card-subtitle.mb-2.text-muted
           %i.fas.fa-paper-plane
           = l post.created_at, format: :datetime
@@ -84,11 +105,19 @@
           = post.body
 
 #followers.mt-4.d-none
-  - @event.users do |user|
+  - users = @event.users.filter { |u| u.public || (!@current_user.nil? && u.id == @current_user.id) }
+  - users.each do |user|
     .media
       = image_tag "profile.png", class: "profile-pic-mini mr-3"
       .media-body
-        %h5.mb-0.mt-1.clickable{:onclick => "window.location.href = './user_events.html';"}
+        %h5.mb-0.mt-1.clickable{:onclick => "window.location.href = '#{user_path(user)}';"}
           = user.name
+          - if user.id == @current_user.id
+            .badge.badge-success.align-top
+              You
         %strong Followers:
         = user.followers.length
+  - if users.empty?
+    .row.my-4
+      .col-12.text-center.text-muted.font-italic
+        No public profiles found
