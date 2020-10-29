@@ -8,7 +8,7 @@ My first homework project learning Ruby on Rails. Event Hub is a beginner social
 
 Versions used during development:
 * ruby 2.7.1p83
-* rails 6.0.3.2
+* rails 6.0.3.4
 
 ### Set up
 
