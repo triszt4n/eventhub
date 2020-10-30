@@ -49,7 +49,6 @@ class PostsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_post
       @post = Post.find(params[:id])
-      puts @post.to_yaml
     end
 
     def set_event

@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :follows, :change_pw, :send_change_pw, :follow]
+  before_action :set_user, only: [:edit, :update, :change_pw, :send_change_pw, :follow]
+  before_action :set_user_show, only: [:show]
+  before_action :set_user_follows, only: [:follows]
   before_action :check_login, only: [:follow, :edit, :update, :change_pw, :send_change_pw]
   before_action :check_permission, only: [:edit, :update, :change_pw, :send_change_pw]
   before_action :check_changing_pw, only: [:send_change_pw]
@@ -96,6 +98,14 @@ class UsersController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_user
       @user = User.find(params[:id])
+    end
+
+    def set_user_show
+      @user = User.includes(:events, :followers => :followers).find(params[:id])
+    end
+
+    def set_user_follows
+      @user = User.includes(:followed_events, :followees => :followers).find(params[:id])
     end
 
     # Check if the original user made the request
