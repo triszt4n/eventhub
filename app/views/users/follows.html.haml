@@ -16,7 +16,7 @@
 
 #events.mt-4
   - events = @user.followed_events.filter(&:published).each do |event|
-    .card.bg-light.mb-3
+    .card.mb-3
       %h4.card-header.clickable{:onclick => "window.location.href = '#{event_path(event)}';"}
         = event.title
       .card-body.row

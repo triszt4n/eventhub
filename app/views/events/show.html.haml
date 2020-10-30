@@ -90,7 +90,7 @@
           = hidden_field_tag :event_id, @event.id
           = submit_tag 'New', class: 'btn btn-primary'
   - @event.posts.each do |post|
-    .card.bg-light.mb-3
+    .card.mb-3
       .card-body
         %h5.card-title
           - if am_i_owner?
