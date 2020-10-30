@@ -44,7 +44,7 @@ class UsersController < ApplicationController
 
   # GET /users
   def index
-    @users = User.all
+    @users = User.includes(:events, :followers).all
   end
 
   # GET /users/:id/follows

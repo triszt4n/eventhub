@@ -8,7 +8,7 @@ class EventsController < ApplicationController
 
   # GET /events
   def index
-    @events = Event.all
+    @events = Event.includes(:user).all
   end
 
   # GET /events/1
