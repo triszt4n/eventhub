@@ -48,8 +48,7 @@
       = "Followers (#{@user.followers.length})"
 
 #events.mt-4
-  - events = is_it_me? ? @user.events : @user.events.filter(&:published)
-  - events.each do |event|
+  - @user.events.each do |event|
     - if is_it_me?
       .row.my-4
         .col-12.text-right
@@ -57,50 +56,57 @@
     .card.text-white.bg-secondary.mb-3
       %h4.card-header.clickable{:onclick => "window.location.href = '#{event_path(event)}';"}
         = event.title
-      .card-body
-        .row.mb-3
-          .lead.col-12.col-lg-3.text-lg-right
-            Short description:
-          .col-12.col-lg-9.pt-1
-            = event.short_desc
-        .row.mb-2
-          .lead.col-12.col-lg-3.text-lg-right
-            Coordinates:
-          .col-12.col-lg-9.pt-1
-            %p.mb-1
-              = event.place
-            %p.m-0
-              %strong
-                = l event.start_date, format: :datetime
-                \-
-                - if event.start_date.to_date == event.end_date.to_date
-                  = l event.end_date, format: :time
-                - else
-                  = l event.end_date, format: :datetime
-        .row
-          .lead.col-12.col-lg-3.text-lg-right
-            Theme of event:
-          .col-12.col-lg-9.pt-1
-            = event.theme
-  - if events.empty?
+      - if event.published
+        .card-body
+          .row.mb-3
+            .lead.col-12.col-lg-3.text-lg-right
+              Short description:
+            .col-12.col-lg-9.pt-1
+              = event.short_desc
+          .row.mb-2
+            .lead.col-12.col-lg-3.text-lg-right
+              Coordinates:
+            .col-12.col-lg-9.pt-1
+              %p.mb-1
+                = event.place
+              %p.m-0
+                %strong
+                  = l event.start_date, format: :datetime
+                  \-
+                  - if event.start_date.to_date == event.end_date.to_date
+                    = l event.end_date, format: :time
+                  - else
+                    = l event.end_date, format: :datetime
+          .row
+            .lead.col-12.col-lg-3.text-lg-right
+              Theme of event:
+            .col-12.col-lg-9.pt-1
+              = event.theme
+      - else 
+        .card-body
+          .text-muted.font-italic Event is not published yet
+  - if @user.events.empty?
     .row.my-4
       .col-12.text-center.text-muted.font-italic
-        No published events found
+        No events found
 
 #followers.mt-4.d-none
-  - followers = @user.followers.filter { |u| u.public || (!@current_user.nil? && u.id == @current_user.id) }
-  - followers.each do |user|
+  - @user.followers.each do |user|
     .media
       = image_tag "profile.png", class: "profile-pic-mini mr-3"
       .media-body
         %h5.mb-0.mt-1.clickable{:onclick => "window.location.href = '#{user_path(user)}';"}
           = user.name
-          - if user.id == @current_user.id
+          - if !@current_user.nil? && user.id == @current_user.id
             .badge.badge-success.align-top
               You
-        %strong Subscribers:
-        = user.followers.length
-  - if followers.empty?
+        - if user.public
+          %strong Followers:
+          = user.followers.length
+        - else
+          .small.text-muted.font-italic Profile not public
+  - if @user.followers.empty?
     .row.my-4
       .col-12.text-center.text-muted.font-italic
-        No public profiles found
+        No followers found
+        

@@ -44,7 +44,7 @@ class UsersController < ApplicationController
 
   # GET /users
   def index
-    @users = User.includes(:events, :followers).all
+    @users = User.includes(:events, :followers).where(public: true).all
   end
 
   # GET /users/:id/follows
@@ -146,7 +146,7 @@ class UsersController < ApplicationController
     # Check if user wants to share their profile
     def check_public
       if !@user.public && !helpers.is_it_me?
-        render_401
+        render_hidden
       end
     end
 
