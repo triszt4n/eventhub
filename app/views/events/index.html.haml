@@ -4,7 +4,7 @@
   .col-4.text-right
     = link_to 'New', new_event_path, class: 'btn btn-primary float-lg-right'
     
-- events = @events.filter(&:published).each do |event| 
+- @events.each do |event| 
   .card.text-white.bg-secondary.mb-3
     %h4.card-header.clickable{:onclick => "window.location.href = '/events/#{event.id}';"}
       = event.title
@@ -38,7 +38,7 @@
           Theme of event:
         .col-12.col-lg-9.pt-1
           = event.theme
-- if events.empty?
+- if @events.empty?
   .row.my-4
     .col-12.text-center.text-muted.font-italic
       No published events found

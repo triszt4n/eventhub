@@ -3,7 +3,7 @@
     Public profiles
 
 .row.row-cols-1.row-cols-lg-2
-  - users = @users.filter(&:public).each do |user|
+  - @users.each do |user|
     .col.mb-4
       .card.clickable{:onclick => "window.location.href = '#{user_path(user)}';"}
         .card-body
@@ -26,7 +26,7 @@
                 %p.m-0
                   %strong Followers:
                   = user.followers.length
-  - if users.empty?
+  - if @users.empty?
     .row.my-4
       .col-12.text-center.text-muted.font-italic
         No public profiles found

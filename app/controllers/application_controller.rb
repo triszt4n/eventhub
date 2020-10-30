@@ -22,4 +22,8 @@ class ApplicationController < ActionController::Base
     def render_401
       render :file => "#{Rails.root}/public/401.html", :status => 401
     end
+
+    def render_hidden
+      render :layout => "layouts/application", :template => "layouts/_hidden"
+    end
 end

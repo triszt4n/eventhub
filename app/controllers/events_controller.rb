@@ -8,7 +8,7 @@ class EventsController < ApplicationController
 
   # GET /events
   def index
-    @events = Event.includes(:user).all
+    @events = Event.includes(:user).where(published: true).all
   end
 
   # GET /events/1
@@ -99,7 +99,7 @@ class EventsController < ApplicationController
     # Check if the event is set to published
     def check_published
       if !@event.published && !helpers.am_i_owner?
-        render_401
+        render_hidden
       end
     end
 

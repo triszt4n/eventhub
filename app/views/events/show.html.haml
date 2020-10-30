@@ -2,7 +2,7 @@
   = javascript_pack_tag 'events'
 
 .row.mt-5
-  .col-12.col-lg-10
+  .col-12.col-lg-9
     %h2
       = @event.title
     - if am_i_following_event?
@@ -13,7 +13,7 @@
       %small.text-danger
         %i.fas.fa-exclamation-circle
         Event is not published yet!
-  .col-12.col-lg-2.mt-3.mt-lg-0.text-right
+  .col-12.col-lg-3.mt-3.mt-lg-0.text-right
     - if am_i_owner?
       = link_to 'Edit', edit_event_path(@event), class: 'btn btn-info'
       = form_tag @event, method: "delete", class: "d-inline-block" do
@@ -105,19 +105,21 @@
           = post.body
 
 #followers.mt-4.d-none
-  - users = @event.users.filter { |u| u.public || (!@current_user.nil? && u.id == @current_user.id) }
-  - users.each do |user|
+  - @event.users.each do |user|
     .media
       = image_tag "profile.png", class: "profile-pic-mini mr-3"
       .media-body
         %h5.mb-0.mt-1.clickable{:onclick => "window.location.href = '#{user_path(user)}';"}
           = user.name
-          - if user.id == @current_user.id
+          - if !@current_user.nil? && user.id == @current_user.id
             .badge.badge-success.align-top
               You
-        %strong Followers:
-        = user.followers.length
-  - if users.empty?
+        - if user.public
+          %strong Followers:
+          = user.followers.length
+        - else
+          .small.text-muted.font-italic Profile not public
+  - if @event.users.empty?
     .row.my-4
       .col-12.text-center.text-muted.font-italic
         No public profiles found
