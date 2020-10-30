@@ -56,6 +56,6 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # Use haml for template engine
-gem 'haml', '~> 5.1.2'
+gem 'haml', '~> 5.2.0'
 # Haml-rails provides haml generators
 gem 'haml-rails', '~> 2.0'
