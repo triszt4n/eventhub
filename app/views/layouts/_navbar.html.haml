@@ -1,28 +1,27 @@
-%nav.navbar.navbar-expand-md.navbar-dark.bg-primary
-  .container
-    = link_to root_path, class: "navbar-brand" do
-      = image_tag "eventhub-icon.svg", size: "22", class: "d-inline-block mr-2"
-      Event Hub
-    %button.navbar-toggler{"aria-controls" => "navbarColor02", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-target" => "#navbarColor02", "data-toggle" => "collapse", :type => "button"}
-      %span.navbar-toggler-icon
-    #navbarColor02.collapse.navbar-collapse
-      %ul.navbar-nav.mr-auto
+%nav.navbar.navbar-expand-md.navbar-dark.bg-dark
+  = link_to root_path, class: "navbar-brand" do
+    = image_tag "eventhub-icon.svg", size: "22", class: "d-inline-block mr-2"
+    Event Hub
+  %button.navbar-toggler{"aria-controls" => "navbarColor02", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-target" => "#navbarColor02", "data-toggle" => "collapse", :type => "button"}
+    %span.navbar-toggler-icon
+  #navbarColor02.collapse.navbar-collapse
+    %ul.navbar-nav.mr-auto
+      %li.nav-item
+        = link_to 'Events', events_path, class: current_controller?('events')? 'nav-link active' : 'nav-link'
+      %li.nav-item
+        = link_to 'Profiles', users_path, class: current_controller?('users')? 'nav-link active' : 'nav-link'
+    %ul.navbar-nav.mr-right
+      - if logged_in?
+        %li.nav-item.dropdown
+          %a#navbarDropdown.nav-link.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => ""}
+            = @current_user.name
+          .dropdown-menu.dropdown-menu-right{"aria-labelledby" => "navbarDropdown"}
+            = link_to 'My profile', user_path(@current_user), class: 'dropdown-item'
+            = link_to 'Edit profile', edit_user_path(@current_user), class: 'dropdown-item'
+            = link_to 'Change password', change_pw_path(@current_user), class: 'dropdown-item'
+            = link_to 'My Followings', follows_path(@current_user), class: 'dropdown-item'
+            .dropdown-divider
+            = link_to 'Log out', logout_path, class: 'dropdown-item'
+      - else
         %li.nav-item
-          = link_to 'Events', events_path, class: current_controller?('events')? 'nav-link active' : 'nav-link'
-        %li.nav-item
-          = link_to 'Profiles', users_path, class: current_controller?('users')? 'nav-link active' : 'nav-link'
-      %ul.navbar-nav.mr-right
-        - if logged_in?
-          %li.nav-item.dropdown
-            %a#navbarDropdown.nav-link.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => ""}
-              = @current_user.name
-            .dropdown-menu.dropdown-menu-right{"aria-labelledby" => "navbarDropdown"}
-              = link_to 'My profile', user_path(@current_user), class: 'dropdown-item'
-              = link_to 'Edit profile', edit_user_path(@current_user), class: 'dropdown-item'
-              = link_to 'Change password', change_pw_path(@current_user), class: 'dropdown-item'
-              = link_to 'My Followings', follows_path(@current_user), class: 'dropdown-item'
-              .dropdown-divider
-              = link_to 'Log out', logout_path, class: 'dropdown-item'
-        - else
-          %li.nav-item
-            = link_to 'Log in', auth_path, class: current_controller?('sessions')? 'nav-link active' : 'nav-link'
+          = link_to 'Log in', auth_path, class: current_controller?('sessions')? 'nav-link active' : 'nav-link'

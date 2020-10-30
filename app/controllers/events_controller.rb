@@ -1,5 +1,6 @@
 class EventsController < ApplicationController
-  before_action :set_event, only: [:show, :edit, :update, :destroy, :follow]
+  before_action :set_event, only: [:edit, :update, :destroy, :follow]
+  before_action :set_event_with_includes, only: [:show]
   before_action :check_login, only: [:follow, :edit, :update, :destroy]
   before_action :check_self_follow, only: [:follow]
   before_action :check_permission, only: [:edit, :update, :destroy]
@@ -7,7 +8,7 @@ class EventsController < ApplicationController
 
   # GET /events
   def index
-    @events = Event.all
+    @events = Event.includes(:user).all
   end
 
   # GET /events/1
@@ -65,6 +66,10 @@ class EventsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_event
       @event = Event.find(params[:id])
+    end
+
+    def set_event_with_includes
+      @event = Event.includes(:user, :posts, :users => :followers).find(params[:id])
     end
 
     # Check if the owner wants to follow their own event

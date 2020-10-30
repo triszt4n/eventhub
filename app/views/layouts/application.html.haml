@@ -10,13 +10,12 @@
     = javascript_include_tag 'https://kit.fontawesome.com/735dba9ed7.js'
     = javascript_pack_tag 'application'
     = yield :javascripts
-  %body
-    = render 'layouts/navbar'
-    
+  %body    
     .container.wrapper
-      = render 'layouts/notification'
-
-      = yield
+      = render 'layouts/navbar'
+      .px-2
+        = render 'layouts/notification'
+        = yield
 
       .placeholder
     %footer.page-footer.mt-5
