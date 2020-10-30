@@ -11,17 +11,16 @@
     = javascript_pack_tag 'application'
     = yield :javascripts
   %body    
-    .container.wrapper
+    .container.wrapper.px-0.d-flex.flex-column.min-vh-100
       = render 'layouts/navbar'
-      .px-2
+      .px-4.flex-grow-1 
         = render 'layouts/notification'
         = yield
-
-      .placeholder
-    %footer.page-footer.mt-5
-      .text-center.py-3
-        .py-0
-          Event Hub © 2020
-        .py-0
-          Developed by
-          = link_to 'triszt4n', 'https://github.com/triszt4n'
+      %footer
+        .text-center.py-3
+          .py-0
+            = link_to 'Event Hub', 'https://github.com/triszt4n/eventhub'
+            © 2020
+          .py-0
+            Developed by
+            = link_to 'triszt4n', 'https://github.com/triszt4n'
