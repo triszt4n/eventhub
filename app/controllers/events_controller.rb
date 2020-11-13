@@ -8,7 +8,7 @@ class EventsController < ApplicationController
 
   # GET /events
   def index
-    @events = Event.includes(:user).where(published: true).all
+    @events = Event.includes(:user).where(published: true).order(created_at: :desc).all
   end
 
   # GET /events/1

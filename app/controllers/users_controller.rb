@@ -31,7 +31,7 @@ class UsersController < ApplicationController
   # POST /users/:id/update
   def update
     if @user.update(user_params)
-      flash[:notice] = "Updating your profile successful!"
+      flash[:notice] = "Updated your profile successfully!"
       redirect_back fallback_location: events_path
     else
       render :edit

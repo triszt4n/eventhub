@@ -14,21 +14,24 @@
     - unless @user.public
       %small.text-muted
         %i.fas.fa-exclamation-circle
-        Profile is not public
+        Profile is not public!
 
 .row.mt-4
-  .col-4.col-lg-2.pr-0.text-right
-    %strong City:
-  .col-8.col-lg-10
-    = @user.city
-  .col-4.col-lg-2.pr-0.text-right
-    %strong Main profile:
-  .col-8.col-lg-10
-    = @user.profile
-  .col-4.col-lg-2.pr-0.text-right
-    %strong About:
-  .col-8.col-lg-10
-    = @user.about
+  - unless @user.city.empty?
+    .col-4.col-lg-2.pr-0.text-right
+      %strong City:
+    .col-8.col-lg-10
+      = @user.city
+  - unless @user.profile.empty?
+    .col-4.col-lg-2.pr-0.text-right
+      %strong Main profile:
+    .col-8.col-lg-10
+      = @user.profile
+  - unless @user.about.empty?
+    .col-4.col-lg-2.pr-0.text-right
+      %strong About:
+    .col-8.col-lg-10
+      = @user.about
 
 - if !is_it_me? && logged_in?
   .row.mt-3.justify-content-md-end
