@@ -26,7 +26,6 @@
                 %p.m-0
                   %strong Followers:
                   = user.followers.length
-  - if @users.empty?
-    .row.my-4
-      .col-12.text-center.text-muted.font-italic
-        No public profiles found
+- if @users.empty?
+  .text-center.text-muted.font-italic
+    No public profiles found
