@@ -1,19 +1,31 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  email: MyString
-  password: MyString
-  name: MyString
-  city: MyString
-  profile: MyString
-  about: MyText
+snape:
+  email: one_public@mail.com
+  salt: qwertz
+  encrypted_password: <%= Digest::SHA1.hexdigest("titokqwertz") %>
+  name: Severus Snape
+  city: Londogwarts
+  profile: Black magic defence
+  about: She is British. She started studying sports science at college but never finished the course. She is allergic to milk.
+  public: true
+
+hermione:
+  email: two_not_public@mail.com
+  salt: asdfgh
+  encrypted_password: <%= Digest::SHA1.hexdigest("titokasdfgh") %>
+  name: Hermione Granger
+  city: York 
+  profile: Among us parties
+  about: Physically, Allison is not in great shape. She needs to lose quite a lot of weight. She is average-height with fair skin, brown hair and brown eyes.
   public: false
 
-two:
-  email: MyString
-  password: MyString
-  name: MyString
-  city: MyString
-  profile: MyString
-  about: MyText
-  public: false
+harry:
+  email: three_public@mail.com
+  salt: fghjkl
+  encrypted_password: <%= Digest::SHA1.hexdigest("titokfghjkl") %>
+  name: Harry Potter
+  city: Privet Drive
+  profile: Soap operas
+  about: Allison grew up in a wealthy neighbourhood. She was raised by her mother, her father having left when she was young.
+  public: true

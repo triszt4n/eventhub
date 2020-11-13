@@ -70,7 +70,7 @@ class PostsController < ApplicationController
     # Check if the owner event is set to published
     def check_published
       if !@post.event.published && !helpers.am_i_poster?
-        render_hidden
+        render_forbidden
       end
     end
 

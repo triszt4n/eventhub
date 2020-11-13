@@ -48,6 +48,7 @@ class EventsController < ApplicationController
   # DELETE /events/1
   def destroy
     @event.posts.destroy_all
+    @event.event_follows.destroy_all
     @event.destroy
     redirect_to events_url
   end
@@ -99,7 +100,7 @@ class EventsController < ApplicationController
     # Check if the event is set to published
     def check_published
       if !@event.published && !helpers.am_i_owner?
-        render_hidden
+        render_forbidden
       end
     end
 

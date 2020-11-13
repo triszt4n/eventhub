@@ -5,12 +5,13 @@ class Event < ApplicationRecord
   has_many :event_follows
   has_many :users, :through => :event_follows
 
-  validates :title, length: { in: 3..255 }
+  validates :title, { presence: true, length: { in: 3..255 } }
   validates :theme, length: { maximum: 255 }
+  validates :start_date, presence: true
   validate :start_date_is_valid_datetime
   validate :end_date_is_valid_datetime
   validate :end_after_start
-  validates :place, length: { in: 3..255 }
+  validates :place, length: { maximum: 255 }
   validates :short_desc, length: { maximum: 255 }
   validates :full_desc, length: { maximum: 500 }
 

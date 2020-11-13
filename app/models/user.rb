@@ -17,7 +17,7 @@ class User < ApplicationRecord
   before_save :encrypt_password
 
   validates :name, presence: true
-  validates :email, { presence: true, uniqueness: true }
+  validates :email, { presence: true, uniqueness: { case_sensitive: false } }
   validates :password, presence: true, confirmation: true, if: :password_required?
   validates :about, length: { maximum: 500 }
   validates :city, length: { maximum: 255 }

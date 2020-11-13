@@ -1,19 +1,46 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  title: MyString
-  theme: MyString
-  short_desc: MyString
-  full_desc: MyText
-  published: false
-  start_date: 2020-09-13 00:06:43
-  end_date: 2020-09-13 00:06:43
+  title: PUBLISHED Summoning Lord Voldemort with the guys
+  theme: Witchcraft and Alcohol
+  short_desc: Much evil soon high in hope do view. Out may few northward believing attempted. 
+  full_desc: Although finished blessing do of. Consider speaking me prospect whatever if. Ten nearer rather hunted six parish indeed number. Allowance repulsive sex may contained can set suspected abilities cordially. Do part am he high rest that. So fruit to ready it being views match.
+  published: true
+  start_date: 2020-12-13 00:03:00
+  end_date: 2020-12-13 00:39:00
+  place: Forbidden Woods
+  user: snape
 
 two:
-  title: MyString
-  theme: MyString
-  short_desc: MyString
-  full_desc: MyText
+  title: PUBLISHED Planning on destroying You know who
+  theme: Project planning and festival
+  short_desc: She literature discovered increasing how diminution understood. Though and highly the enough county for man. 
+  full_desc: Bringing so sociable felicity supplied mr. September suspicion far him two acuteness perfectly. Covered as an examine so regular of. Ye astonished friendship remarkably no. Window admire matter praise you bed whence. Delivered ye sportsmen zealously arranging frankness estimable as.
+  published: true
+  start_date: 2020-12-23 00:06:00
+  end_date: 2020-12-24 10:10:00
+  place: Hogwarts
+  user: hermione
+
+three:
+  title: UNPUBLISHED Lots of daffodils
+  theme: Maybe daffodil collecting
+  short_desc: Don't know it yet
+  full_desc: Eh.
   published: false
-  start_date: 2020-09-13 00:06:43
-  end_date: 2020-09-13 00:06:43
+  start_date: 2021-09-13 00:06:43
+  end_date: 2021-09-13 00:09:43
+  place: Somewhere
+  user: snape
+
+four:
+  title: UNPUBLISHED Some board game night
+  theme: Monopoly?
+  short_desc: Lorem ipsum.
+  full_desc: Longer lorem ipsum dolor sit amet.
+  published: false
+  start_date: 2021-09-14 01:06:43
+  end_date: 2021-09-14 03:09:43
+  place: At my apartment
+  user: hermione
+

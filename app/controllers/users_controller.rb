@@ -78,9 +78,9 @@ class UsersController < ApplicationController
     @user.password = params[:user][:password]
     if @user.save
       flash[:notice] = 'Successful change of password'
-      render :show
+      redirect_to @user
     else
-      render :change_pw
+      redirect_to :change_pw
     end
   end
 
@@ -146,7 +146,7 @@ class UsersController < ApplicationController
     # Check if user wants to share their profile
     def check_public
       if !@user.public && !helpers.is_it_me?
-        render_hidden
+        render_forbidden
       end
     end
 
