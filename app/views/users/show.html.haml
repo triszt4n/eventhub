@@ -48,11 +48,11 @@
       = "Followers (#{@user.followers.length})"
 
 #events.mt-4
+  - if is_it_me?
+    .row.my-4
+      .col-12.text-right
+        = link_to 'New', new_event_path, class: 'btn btn-primary'
   - @user.events.each do |event|
-    - if is_it_me?
-      .row.my-4
-        .col-12.text-right
-          = link_to 'New', new_event_path, class: 'btn btn-primary'
     .card.text-white.bg-secondary.mb-3
       %h4.card-header.clickable{:onclick => "window.location.href = '#{event_path(event)}';"}
         = event.title

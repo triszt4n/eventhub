@@ -1,11 +1,16 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  title: MyString
-  body: MyText
+one_one:
+  title: Initial post
+  body: Please welcome to this wonderous event.
   event: one
 
-two:
-  title: MyString
-  body: MyText
+one_two:
+  title: I'll be late
+  body: Sorry guys, I'll be late to the party, please start it without me.
+  event: one
+
+two_one:
+  title: Nothing stops us
+  body: Harry Potter is joining the club. Yay!
   event: two
