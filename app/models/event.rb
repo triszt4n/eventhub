@@ -1,5 +1,5 @@
 class Event < ApplicationRecord
-  has_many :posts
+  has_many :posts, -> { order(created_at: :desc) }
   belongs_to :user
   
   has_many :event_follows
