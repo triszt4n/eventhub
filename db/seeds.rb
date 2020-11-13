@@ -9,6 +9,8 @@
 user_count = 16
 event_per_user = 3
 post_per_event = 5
+follows_per_user = 3
+follows_per_event = 3
 
 user_count.times do |u|
   user = User.create!(
@@ -21,6 +23,7 @@ user_count.times do |u|
     public: Faker::Boolean.boolean
   )
   puts "User created: #{u + 1}"
+
   event_per_user.times do |e|
     event = Event.create!(
       title: Faker::Book.title, 
@@ -34,6 +37,7 @@ user_count.times do |u|
       user: user
     )
     puts "  Event created: #{u * event_per_user + e + 1}"
+    
     post_per_event.times do |p|
       puts "    Post created: #{(u * event_per_user + e) * post_per_event + p + 1}"
       Post.create!(
@@ -42,5 +46,29 @@ user_count.times do |u|
         event_id: event.id
       )
     end
+  end
+end
+
+Event.includes(:user).where(published: true).all.each do |event|
+  available = [*1..user_count] - [event.user.id]
+  follows_per_event.times do |f|
+    user_id = available.sample
+    EventFollow.create!(
+      event: event,
+      user: User.find(user_id)
+    )
+    puts "EventFollow created: event: #{event.id} - follower: #{user_id}"
+  end
+end
+
+User.where(public: true).all.each do |user|
+  available = [*1..user_count] - [user.id]
+  follows_per_event.times do |f|
+    user_id = available.sample
+    UserFollow.create!(
+      follower: User.find(user_id),
+      followee: user
+    )
+    puts "UserFollow created: followee: #{user.id} - follower: #{user_id}"
   end
 end
