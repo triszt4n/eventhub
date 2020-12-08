@@ -21,7 +21,7 @@
             = link_to 'Change password', change_pw_path(@current_user), class: 'dropdown-item'
             = link_to 'My Followings', follows_path(@current_user), class: 'dropdown-item'
             .dropdown-divider
-            = link_to 'Log out', logout_path, class: 'dropdown-item'
+            = link_to 'Log out', logout_path, class: 'dropdown-item', id: 'logout'
       - else
         %li.nav-item
-          = link_to 'Log in', auth_path, class: current_controller?('sessions')? 'nav-link active' : 'nav-link'
+          = link_to 'Log in', auth_path, class: current_controller?('sessions')? 'nav-link active' : 'nav-link', id: 'login'
