@@ -28,17 +28,21 @@ jobs:
     #       - '3306:3306'
 
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
     - name: Set up Ruby
     # To automatically get bug fixes and new Ruby versions for ruby/setup-ruby,
     # change this to (see https://github.com/ruby/setup-ruby#versioning):
-    # uses: ruby/setup-ruby@v1
-      uses: ruby/setup-ruby@ec106b438a1ff6ff109590de34ddc62c540232e0
+      uses: ruby/setup-ruby@v1
+    # uses: ruby/setup-ruby@ec106b438a1ff6ff109590de34ddc62c540232e0
       with:
         ruby-version: 2.7.1
+
     # - name: Install MySQL client
     #   run: |
     #     sudo apt-get -yqq install libmysqlclient-dev
+
     - name: Cache Ruby Gems
       uses: actions/cache@v2
       with:
@@ -46,14 +50,20 @@ jobs:
         key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
         restore-keys: |
           ${{ runner.os }}-gems-
-    - name: Install dependencies
-      run: bundle install
-    # - name: Run tests
-    #   run: bundle exec rake
-    # - name: Formatting and Security Checks
+  
+    - name: Bundle Install
+      run: |
+        bundle config path vendor/bundle
+        bundle install --jobs 4 --retry 3
+
+    # - name: Run Tests
+    #   env:
+    #     MYSQL_DATABASE: eventhub_test
+    #     MYSQL_HOST: 127.0.0.1
+    #     MYSQL_USER: root
+    #     MYSQL_ROOT_PASSWORD: ''
+    #     RAILS_ENV: test
+    #     WITH_COVERAGE: true
     #   run: |
-    #     bundle exec rubocop
-    #     bundle exec brakeman -z
-    #     gem install bundle-audit
-    #     bundle-audit update
-    #     bundle-audit
+    #     bin/rails db:setup
+    #     bundle exec rake test
